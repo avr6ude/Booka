@@ -1,12 +1,12 @@
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import Header from "./Header";
-import BookList from "./BookList";
+import BookSearch from "./BookSearch";
 
 export default function Landing() {
   return (
     <View style={{flex: 1}}>
       <Header />
-      <BookList />
+      <BookSearch />
     </View>
   )
 }
