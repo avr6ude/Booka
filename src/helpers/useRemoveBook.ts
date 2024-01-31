@@ -4,8 +4,8 @@ import { bookStore } from "../stores/bookStore"
 export default function useRemoveBook () {
   const [, setBooks] = useAtom(bookStore)
 
-  const removeBook = () => {
-    setBooks((prevBooks) => prevBooks.slice(0, -1))
+  const removeBook = (book: Book) => {
+    setBooks((prevBooks) => prevBooks.filter((b) => b.id !== book.id))
   }
 
   return removeBook
