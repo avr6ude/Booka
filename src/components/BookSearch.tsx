@@ -2,15 +2,13 @@ import { FlashList } from "@shopify/flash-list";
 import { useState } from "react";
 import { View, TextInput, StyleSheet  } from "react-native";
 import { Text, ListItem, Button } from "react-native-ui-lib";
+import truncateEnd from "../helpers/truncateEnd";
+import Spacer from "./Spacer";
+import { useAtom } from "jotai";
+import { bookStore } from "../stores/bookStore";
+import useAddBook from "../helpers/useAddBook";
+import BookCard from "./BookCard";
 
-const cardStyle = StyleSheet.create({
-  card: {
-    paddingLeft: 10, 
-    paddingVertical: 5,
-    flexDirection: 'column',
-    justifyContent: 'center',
-  }
-})
 
 const searchBarStyle = StyleSheet.create({
   container: {
@@ -26,14 +24,13 @@ const searchBarStyle = StyleSheet.create({
     padding: 10,
     marginRight: 10
   },
-  button: {
-    padding: 1,
-  }
 })
 
 export default function BookSearch() {
   const [query, setQuery] = useState<string>('');
   const [books, setBooks] = useState<Book[]>([]);
+
+  const addBook = useAddBook();
 
   const handleSearch = async () => {
     if (query.length > 0) {
@@ -50,22 +47,12 @@ export default function BookSearch() {
     }
   }
 
-  function BookCard ({title, authors}: {
-    title: string,
-    authors: string[]
-  }) {
-    return (
-      <ListItem style={cardStyle.card} onPress={() => {}}>
-        <Text>{title}</Text>
-        {authors && authors.length > 0 && <Text>By {authors.join(', ')}</Text>}
-      </ListItem>
-    )
-  }
-
   const renderItem = ({item}: {item: Book}) => {
+    const title = truncateEnd(item.volumeInfo.title, 50)
+    const authors = item.volumeInfo.authors
     return (
-      <View style={{borderTopWidth: 0.5}}>
-        <BookCard title={item.volumeInfo.title} authors={item.volumeInfo.authors} />
+      <View>
+        <BookCard title={title} authors={authors} onPress={() => addBook(item)} />
       </View> 
     )
   }
@@ -80,7 +67,7 @@ export default function BookSearch() {
           onChangeText={setQuery}
           onSubmitEditing={handleSearch}
         />
-        <Button style={searchBarStyle.button} onPress={handleSearch} labelStyle={{color: "black"}}>
+        <Button onPress={handleSearch} labelStyle={{color: "black"}}>
           <Text>Search</Text>
         </Button>
       </View>
@@ -89,6 +76,8 @@ export default function BookSearch() {
           data={books}
           renderItem={renderItem}
           keyExtractor={item => item.id}
+          estimatedItemSize={200}
+          ItemSeparatorComponent={() => <Spacer />}
         />
       </View>
     </>

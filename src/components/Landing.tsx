@@ -1,11 +1,11 @@
 import { View } from "react-native";
-import Header from "./Header";
 import BookSearch from "./BookSearch";
+import CommonHeader from "./CommonHeader";
 
 export default function Landing() {
   return (
     <View style={{flex: 1}}>
-      <Header />
+      <CommonHeader text="Booka" />
       <BookSearch />
     </View>
   )
