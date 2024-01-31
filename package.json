@@ -5,13 +5,24 @@
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
+    "ios-expo": "npx expo run:ios",
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest"
   },
   "dependencies": {
+    "@react-navigation/bottom-tabs": "^6.5.11",
+    "@react-navigation/native": "^6.1.9",
+    "@react-navigation/native-stack": "^6.9.17",
+    "@shopify/flash-list": "^1.6.3",
+    "jotai": "^2.6.3",
     "react": "18.2.0",
-    "react-native": "0.73.3"
+    "react-native": "0.73.3",
+    "react-native-gesture-handler": "^2.14.1",
+    "react-native-reanimated": "^3.6.2",
+    "react-native-safe-area-context": "^4.8.2",
+    "react-native-screens": "^3.29.0",
+    "react-native-ui-lib": "^7.16.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
