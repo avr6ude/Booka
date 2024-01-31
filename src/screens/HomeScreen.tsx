@@ -1,5 +1,5 @@
 import { SafeAreaView, StatusBar, useColorScheme } from "react-native";
-import Landing from "./Landing";
+import Landing from "../components/Landing";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Colors } from "react-native-ui-lib";
 
