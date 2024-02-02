@@ -1,11 +1,4 @@
-import {
-  SafeAreaView,
-  StatusBar,
-  Text,
-  View,
-  useColorScheme,
-} from 'react-native'
-import { Colors } from 'react-native-ui-lib'
+import { SafeAreaView, View } from 'react-native'
 import CommonHeader from '../components/CommonHeader'
 import { FlashList } from '@shopify/flash-list'
 import { useAtom } from 'jotai'
@@ -13,9 +6,8 @@ import { bookStore } from '../stores/bookStore'
 import truncateEnd from '../helpers/truncateEnd'
 import BookCard from '../components/BookCard'
 import useRemoveBook from '../helpers/useRemoveBook'
-import React from 'react'
 
-export default function SavedBooks() {
+export default function SavedBooksScreen() {
   const [item] = useAtom(bookStore)
   const removeBook = useRemoveBook()
 

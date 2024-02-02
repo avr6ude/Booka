@@ -17,7 +17,7 @@ export default function BookSearch() {
       justifyContent: 'space-between',
       alignContent: 'center',
       padding: 10,
-      marginVertical: 20,
+      marginBottom: 20,
       marginHorizontal: 10,
       borderRadius: 24,
       backgroundColor: colors.background,

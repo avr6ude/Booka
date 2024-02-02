@@ -1,5 +1,5 @@
-import SavedBooks from '@/screens/SavedBooks'
+import SavedBooksScreen from '@/screens/SavedBooksScreen'
 
 export default function TabOneScreen() {
-  return <SavedBooks />
+  return <SavedBooksScreen />
 }

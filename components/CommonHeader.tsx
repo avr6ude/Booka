@@ -10,6 +10,7 @@ export default function CommonHeader({ text }: { text: string }) {
     topBar: {
       flexDirection: 'row',
       justifyContent: 'center',
+      marginBottom: 20,
     },
     headerText: {
       color: colors.text,
