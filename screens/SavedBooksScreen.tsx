@@ -16,7 +16,6 @@ export default function SavedBooksScreen() {
     const authors = item.volumeInfo.authors
     const img = item.volumeInfo.imageLinks?.thumbnail
     const pages = item.volumeInfo.pageCount
-    console.log(pages)
     return (
       <View>
         <BookCard
