@@ -1,16 +1,16 @@
 import React from 'react'
 import FontAwesome from '@expo/vector-icons/FontAwesome'
 import { Tabs } from 'expo-router'
-
 import Colors from '@/constants/Colors'
 import { useColorScheme } from '@/helpers/useColorScheme'
+import { AntDesign } from '@expo/vector-icons'
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name']
+  name: React.ComponentProps<typeof AntDesign>['name']
   color: string
 }) {
-  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />
+  return <AntDesign size={28} style={{ marginBottom: -3 }} {...props} />
 }
 
 export default function TabLayout() {
@@ -27,21 +27,25 @@ export default function TabLayout() {
         name="savedBooks"
         options={{
           title: 'Saved Books',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="book" color={color} />,
         }}
       />
       <Tabs.Screen
         name="add"
         options={{
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: 'Add',
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="pluscircle" color={color} />
+          ),
         }}
       />
       <Tabs.Screen
         name="settings"
         options={{
-          title: 'Tab 2',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: 'Settings',
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="setting" color={color} />
+          ),
         }}
       />
     </Tabs>

@@ -1,5 +1,4 @@
-import { faBook, faLayerGroup } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { FontAwesome } from '@expo/vector-icons'
 import { useTheme } from '@react-navigation/native'
 import React from 'react'
 import { StyleSheet, Image } from 'react-native'
@@ -83,7 +82,7 @@ export default function BookCard({
           )}
           {pageCount > 0 && (
             <View style={cardStyle.pages}>
-              <FontAwesomeIcon icon={faLayerGroup} color="white" />
+              <FontAwesome icon="layerGroup" color="white" />
               <Text style={cardStyle.pagesText}>{pageCount} pages</Text>
             </View>
           )}
