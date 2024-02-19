@@ -58,5 +58,9 @@
 {
   return [super application:application didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler];
 }
+- (BOOL)bridgelessEnabled
+{
+  return YES;
+}
 
 @end
