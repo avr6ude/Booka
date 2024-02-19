@@ -5,7 +5,7 @@ import { Button, Card } from 'react-native-ui-lib'
 import useAddBook from '../helpers/useAddBook'
 import BookCard from './BookCard'
 import { useTheme } from '@react-navigation/native'
-import { AntDesign } from '@expo/vector-icons'
+import Ionicons from '@expo/vector-icons/Ionicons'
 export default function BookSearch() {
   const colors = useTheme().colors
 
@@ -43,7 +43,6 @@ export default function BookSearch() {
         const res = await fetch(uri + encodeURIComponent(query))
         const json = await res.json()
         setBooks(json.items || [])
-        console.log(books)
       } catch (e) {
         console.error(e)
       }
@@ -55,6 +54,7 @@ export default function BookSearch() {
     const authors = item.volumeInfo.authors
     const img = item.volumeInfo.imageLinks?.thumbnail
     const pages = item.volumeInfo.pageCount
+    const description = item.volumeInfo.description
     return (
       <View>
         <BookCard
@@ -63,6 +63,7 @@ export default function BookSearch() {
           pageCount={pages}
           img={img}
           buttonLabel="+"
+          description={description}
           buttonOnPress={() => addBook(item)}
           onPress={() => {}}
         />
@@ -70,12 +71,7 @@ export default function BookSearch() {
     )
   }
   const searchIcon = () => (
-    <AntDesign
-      icon="setting"
-      size={16}
-      style={{ marginBottom: -3 }}
-      color={colors.background}
-    />
+    <Ionicons icon="search" size={16} color={colors.text} />
   )
 
   return (
@@ -89,9 +85,10 @@ export default function BookSearch() {
           onSubmitEditing={handleSearch}
         />
         <Button round onPress={handleSearch} iconSource={searchIcon} />
-        <AntDesign icon="setting" size={28} color="white" />
+        <Ionicons icon="search" size={16} color={colors.text} />
       </Card>
       <View style={{ height: '100%', flex: 1 }}>
+        <Ionicons icon="search" size={16} color="white" />
         <FlashList
           data={books}
           renderItem={renderItem}
