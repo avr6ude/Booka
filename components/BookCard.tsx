@@ -1,8 +1,13 @@
-import { FontAwesome } from '@expo/vector-icons'
+import Ionicons from '@expo/vector-icons/Ionicons'
+import {
+  BottomSheetModal,
+  BottomSheetModalProvider,
+} from '@gorhom/bottom-sheet'
 import { useTheme } from '@react-navigation/native'
-import React from 'react'
+import { useCallback, useMemo, useRef } from 'react'
 import { StyleSheet, Image } from 'react-native'
 import { Button, ListItem, Text, View } from 'react-native-ui-lib'
+import BookModal from './Modal'
 
 interface BookProps {
   title: string
@@ -10,6 +15,7 @@ interface BookProps {
   buttonLabel?: string
   img?: string
   pageCount: number
+  description: string
   onPress?: () => void
   buttonOnPress?: () => void
 }
@@ -20,7 +26,7 @@ export default function BookCard({
   img = '',
   buttonLabel = '+',
   pageCount,
-  onPress,
+  description,
   buttonOnPress,
 }: BookProps) {
   const colors = useTheme().colors
@@ -69,9 +75,23 @@ export default function BookCard({
       width: 30,
     },
   })
+
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null)
+
+  // Function to open the bottom sheet
+  const handlePresentModalPress = useCallback(() => {
+    bottomSheetModalRef.current?.present()
+  }, [])
+
+  // Bottom sheet content
+  const renderContent = () => <BookModal />
+
+  // Bottom sheet modal configuration
+  const snapPoints = useMemo(() => ['25%', '85%'], [])
+
   return (
     <View style={cardStyle.card}>
-      <ListItem style={cardStyle.item} onPress={onPress}>
+      <ListItem style={cardStyle.item} onPress={handlePresentModalPress}>
         {img && <Image source={{ uri: img }} style={cardStyle.image} />}
         <View style={cardStyle.cardText}>
           <Text text65 style={cardStyle.bookHeader}>
@@ -82,7 +102,7 @@ export default function BookCard({
           )}
           {pageCount > 0 && (
             <View style={cardStyle.pages}>
-              <FontAwesome icon="layerGroup" color="white" />
+              <Ionicons name="layers-outline" size={16} color={colors.text} />
               <Text style={cardStyle.pagesText}>{pageCount} pages</Text>
             </View>
           )}
@@ -97,6 +117,16 @@ export default function BookCard({
           onPress={buttonOnPress}
         />
       </View>
+      <BottomSheetModal
+        ref={bottomSheetModalRef}
+        index={1}
+        snapPoints={snapPoints}
+        backgroundStyle={{
+          backgroundColor: colors.background,
+        }}
+      >
+        {renderContent()}
+      </BottomSheetModal>
     </View>
   )
 }
