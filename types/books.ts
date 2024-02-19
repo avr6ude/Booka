@@ -1,16 +1,16 @@
-interface Book {
-  id: string,
+interface BookData {
+  id: string
   volumeInfo: {
-    title: string,
-    authors: string[],
-    description: string,
+    title: string
+    authors: string[]
+    description: string
     industryIdentifiers: {
-      type: string,
+      type: string
       identifier: string
-    },
-    pageCount: number,
+    }
+    pageCount: number
     imageLinks: {
-      smallThumbnail: string,
+      smallThumbnail: string
       thumbnail: string
     }
   }

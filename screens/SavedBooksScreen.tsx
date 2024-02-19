@@ -11,17 +11,19 @@ export default function SavedBooksScreen() {
   const [item] = useAtom(bookStore)
   const removeBook = useRemoveBook()
 
-  const renderItem = ({ item }: { item: Book }) => {
+  const renderItem = ({ item }: { item: BookData }) => {
     const title = truncateEnd(item.volumeInfo.title, 50)
     const authors = item.volumeInfo.authors
     const img = item.volumeInfo.imageLinks?.thumbnail
     const pages = item.volumeInfo.pageCount
+    const description = item.volumeInfo.description
     return (
       <View>
         <BookCard
           title={title}
           pageCount={pages}
           img={img}
+          description={description}
           authors={authors}
           buttonLabel="-"
           buttonOnPress={() => removeBook(item)}
@@ -37,7 +39,7 @@ export default function SavedBooksScreen() {
         <FlashList
           data={item}
           renderItem={renderItem}
-          keyExtractor={(item: Book) => item.id}
+          keyExtractor={(item: BookData) => item.id}
           estimatedItemSize={200}
         />
       </View>

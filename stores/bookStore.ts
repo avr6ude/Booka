@@ -1,3 +1,3 @@
-import { atom } from "jotai";
+import { atom } from 'jotai'
 
-export const bookStore = atom<Book[]>([])
+export const bookStore = atom<BookData[]>([])

@@ -13,11 +13,16 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "@": "morrowdigital/watermelondb-expo-plugin",
+    "@expo/config-plugins": "^7.8.4",
     "@expo/vector-icons": "^14.0.0",
     "@gorhom/bottom-sheet": "^4.6.1",
+    "@morrowdigital/watermelondb-expo-plugin": "^2.3.1",
+    "@nozbe/watermelondb": "^0.27.1",
     "@react-navigation/native": "^6.0.2",
     "@shopify/flash-list": "^1.6.3",
     "expo": "~50.0.5",
+    "expo-build-properties": "~0.11.1",
     "expo-font": "~11.10.2",
     "expo-linking": "~6.2.2",
     "expo-router": "~3.4.6",

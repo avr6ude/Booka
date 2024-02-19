@@ -6,6 +6,10 @@
     "paths": {
       "@/*": ["./*"],
     },
+    "target": "ESNext",
+    "module": "ESNext",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
   },
   "include": [
     "**/*.ts",
