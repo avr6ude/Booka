@@ -31,7 +31,7 @@ export default function BookSearch() {
   })
 
   const [query, setQuery] = useState<string>('')
-  const [books, setBooks] = useState<Book[]>([])
+  const [books, setBooks] = useState<BookData[]>([])
 
   const addBook = useAddBook()
   const uri = 'https://www.googleapis.com/books/v1/volumes?q='
@@ -49,12 +49,13 @@ export default function BookSearch() {
     }
   }
 
-  const renderItem = ({ item }: { item: Book }) => {
+  const renderItem = ({ item }: { item: BookData }) => {
     const title = item.volumeInfo.title //truncateEnd(item.volumeInfo.title, 50)
     const authors = item.volumeInfo.authors
     const img = item.volumeInfo.imageLinks?.thumbnail
     const pages = item.volumeInfo.pageCount
     const description = item.volumeInfo.description
+
     return (
       <View>
         <BookCard

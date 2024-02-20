@@ -10,14 +10,31 @@ import * as SplashScreen from 'expo-splash-screen'
 import { useEffect } from 'react'
 import { useColorScheme } from '@/helpers/useColorScheme'
 import Colors from '@/constants/Colors'
+import SQLiteAdapter from '@nozbe/watermelondb/adapters/sqlite'
 import { AntDesign } from '@expo/vector-icons'
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import { DatabaseProvider } from '@nozbe/watermelondb/DatabaseProvider'
+import booka from '@/model/schema'
+import { Database } from '@nozbe/watermelondb'
+import Author from '@/model/Author'
+import Book from '@/model/Book'
+import IndustryIdentifier from '@/model/IndustryIdentifier'
 export { ErrorBoundary } from 'expo-router'
 
 export const unstable_settings = {
   initialRouteName: '/',
 }
+
+const adapter = new SQLiteAdapter({
+  dbName: 'booka',
+  schema: booka,
+})
+
+const database = new Database({
+  adapter,
+  modelClasses: [Book, Author, IndustryIdentifier],
+})
 
 SplashScreen.preventAutoHideAsync()
 
@@ -55,44 +72,46 @@ function RootLayoutNav() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <BottomSheetModalProvider>
-          <Tabs
-            screenOptions={{
-              tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-              headerShown: false,
-            }}
-          >
-            <Tabs.Screen
-              name="savedBooks"
-              options={{
-                title: 'Saved Books',
-                tabBarIcon: ({ color }) => (
-                  <TabBarIcon name="book" color={color} />
-                ),
+      <DatabaseProvider database={database}>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <BottomSheetModalProvider>
+            <Tabs
+              screenOptions={{
+                tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+                headerShown: false,
               }}
-            />
-            <Tabs.Screen
-              name="add"
-              options={{
-                title: 'Add',
-                tabBarIcon: ({ color }) => (
-                  <TabBarIcon name="pluscircle" color={color} />
-                ),
-              }}
-            />
-            <Tabs.Screen
-              name="settings"
-              options={{
-                title: 'Settings',
-                tabBarIcon: ({ color }) => (
-                  <TabBarIcon name="setting" color={color} />
-                ),
-              }}
-            />
-          </Tabs>
-        </BottomSheetModalProvider>
-      </GestureHandlerRootView>
+            >
+              <Tabs.Screen
+                name="savedBooks"
+                options={{
+                  title: 'Saved Books',
+                  tabBarIcon: ({ color }) => (
+                    <TabBarIcon name="book" color={color} />
+                  ),
+                }}
+              />
+              <Tabs.Screen
+                name="add"
+                options={{
+                  title: 'Add',
+                  tabBarIcon: ({ color }) => (
+                    <TabBarIcon name="pluscircle" color={color} />
+                  ),
+                }}
+              />
+              <Tabs.Screen
+                name="settings"
+                options={{
+                  title: 'Settings',
+                  tabBarIcon: ({ color }) => (
+                    <TabBarIcon name="setting" color={color} />
+                  ),
+                }}
+              />
+            </Tabs>
+          </BottomSheetModalProvider>
+        </GestureHandlerRootView>
+      </DatabaseProvider>
     </ThemeProvider>
   )
 }

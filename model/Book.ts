@@ -1,5 +1,6 @@
 import { Model } from '@nozbe/watermelondb'
 import { field, children, lazy } from '@nozbe/watermelondb/decorators'
+import IndustryIdentifier from './IndustryIdentifier'
 
 class Book extends Model {
   static table = 'books'
@@ -11,8 +12,10 @@ class Book extends Model {
   @field('thumbnail') thumbnail!: string
 
   @children('authors') authors!: any
-  @children('industry_identifiers') industryIdentifiers!: BookData
+  @children('industry_identifiers') industryIdentifiers!: IndustryIdentifier[]
 
   @lazy
   fullTitle = this.title.concat(' - ', this.description)
 }
+
+export default Book
