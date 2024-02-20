@@ -4,11 +4,16 @@ import { StyleSheet, ScrollView } from 'react-native'
 import useAddBook from '@/helpers/useAddBook'
 import Colors from '@/constants/Colors'
 import { useTheme } from '@react-navigation/native'
+import Book from '@/model/Book'
 
-export default function BookModal() {
-  const params = useLocalSearchParams()
+export default function BookModal({
+  title,
+  description,
+  authors,
+  thumbnail,
+  pageCount,
+}: Book) {
   const colors = useTheme().colors
-  const { title, authors, img, pageCount, description } = params
 
   const addBook = useAddBook()
 
@@ -47,11 +52,11 @@ export default function BookModal() {
 
   return (
     <View style={modalStyle.container}>
-      <Image source={{ uri: img }} style={modalStyle.image} />
+      <Image source={{ uri: thumbnail }} style={modalStyle.image} />
       <View style={modalStyle.bookInfo}>
         <Text style={modalStyle.bookInfoTextHeader}>{title}</Text>
         <Text style={modalStyle.bookInfoText}>{authors}</Text>
-        {pageCount != '0' && (
+        {pageCount != 0 && (
           <Text style={modalStyle.bookInfoText}>{pageCount} pages</Text>
         )}
       </View>

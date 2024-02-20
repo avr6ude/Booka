@@ -1,22 +1,33 @@
 import { SafeAreaView, View } from 'react-native'
 import CommonHeader from '../components/CommonHeader'
 import { FlashList } from '@shopify/flash-list'
-import { useAtom } from 'jotai'
-import { bookStore } from '../stores/bookStore'
 import truncateEnd from '../helpers/truncateEnd'
 import BookCard from '../components/BookCard'
 import useRemoveBook from '../helpers/useRemoveBook'
+import { useDatabase } from '@nozbe/watermelondb/hooks'
+import { useEffect, useState } from 'react'
+import Book from '@/model/Book'
 
 export default function SavedBooksScreen() {
-  const [item] = useAtom(bookStore)
+  const database = useDatabase()
+  const [books, setBooks] = useState<Book[]>([])
   const removeBook = useRemoveBook()
 
-  const renderItem = ({ item }: { item: BookData }) => {
-    const title = truncateEnd(item.volumeInfo.title, 50)
-    const authors = item.volumeInfo.authors
-    const img = item.volumeInfo.imageLinks?.thumbnail
-    const pages = item.volumeInfo.pageCount
-    const description = item.volumeInfo.description
+  useEffect(() => {
+    const fetchBooks = async () => {
+      const bookCollection = database.collections.get<Book>('books')
+      const fetchedBooks = await bookCollection.query().fetch()
+      setBooks(fetchedBooks)
+    }
+
+    fetchBooks()
+  }, [database])
+  const renderItem = ({ item }: { item: Book }) => {
+    const title = truncateEnd(item.title, 50)
+    //const authors = item.authors
+    const img = item.thumbnail
+    const pages = item.pageCount
+    const description = item.description
     return (
       <View>
         <BookCard
@@ -24,7 +35,7 @@ export default function SavedBooksScreen() {
           pageCount={pages}
           img={img}
           description={description}
-          authors={authors}
+          //authors={authors}
           buttonLabel="-"
           buttonOnPress={() => removeBook(item)}
         />
@@ -35,14 +46,12 @@ export default function SavedBooksScreen() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <CommonHeader text="My books" />
-      <View style={{ height: '100%' }}>
-        <FlashList
-          data={item}
-          renderItem={renderItem}
-          keyExtractor={(item: BookData) => item.id}
-          estimatedItemSize={200}
-        />
-      </View>
+      <FlashList
+        data={books}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id.toString()}
+        estimatedItemSize={200}
+      />
     </SafeAreaView>
   )
 }

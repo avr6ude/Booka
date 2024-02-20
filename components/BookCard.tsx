@@ -84,7 +84,15 @@ export default function BookCard({
   }, [])
 
   // Bottom sheet content
-  const renderContent = () => <BookModal />
+  const renderContent = () => (
+    <BookModal
+      title={title}
+      description={description}
+      authors={authors}
+      thumbnail={img}
+      pageCount={pageCount}
+    />
+  )
 
   // Bottom sheet modal configuration
   const snapPoints = useMemo(() => ['25%', '85%'], [])
