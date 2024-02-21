@@ -37,7 +37,7 @@ export default function SavedBooksScreen() {
           description={description}
           //authors={authors}
           buttonLabel="-"
-          buttonOnPress={() => removeBook(item)}
+          buttonOnPress={() => removeBook(item.id)}
         />
       </View>
     )

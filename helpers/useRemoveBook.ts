@@ -1,11 +1,25 @@
-import { useAtom } from "jotai"
-import { bookStore } from "../stores/bookStore"
+import { Q } from '@nozbe/watermelondb'
+import { useDatabase } from '@nozbe/watermelondb/hooks'
 
-export default function useRemoveBook () {
-  const [, setBooks] = useAtom(bookStore)
+export default function useRemoveBook() {
+  const database = useDatabase()
+  const removeBook = async (bookId: string) => {
+    await database
+      .write(async () => {
+        const book = await database.collections.get('books').find(bookId)
+        if (book) {
+          const authors = await database.collections
+            .get('authors')
+            .query(Q.where('book_id', bookId))
+            .fetch()
 
-  const removeBook = (book: Book) => {
-    setBooks((prevBooks) => prevBooks.filter((b) => b.id !== book.id))
+          for (const author of authors) {
+            await author.destroyPermanently()
+          }
+          await book.destroyPermanently()
+        }
+      })
+      .catch((error) => console.error(error))
   }
 
   return removeBook

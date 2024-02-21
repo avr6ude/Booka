@@ -26,12 +26,12 @@ export const unstable_settings = {
   initialRouteName: '/',
 }
 
-const adapter = new SQLiteAdapter({
+export const adapter = new SQLiteAdapter({
   dbName: 'booka',
   schema: booka,
 })
 
-const database = new Database({
+export const database = new Database({
   adapter,
   modelClasses: [Book, Author, IndustryIdentifier],
 })
