@@ -5,7 +5,7 @@ import { Button, Card } from 'react-native-ui-lib'
 import useAddBook from '../helpers/useAddBook'
 import BookCard from './BookCard'
 import { useTheme } from '@react-navigation/native'
-import Ionicons from '@expo/vector-icons/Ionicons'
+import { Ionicons } from '@expo/vector-icons'
 export default function BookSearch() {
   const colors = useTheme().colors
 
@@ -32,10 +32,16 @@ export default function BookSearch() {
 
   const [query, setQuery] = useState<string>('')
   const [books, setBooks] = useState<BookData[]>([])
+  const [added, setAdded] = useState<boolean>(false)
 
   const addBook = useAddBook()
+
+  const handleAddBook = (item: BookData) => {
+    addBook(item)
+    setAdded(true)
+  }
+
   const uri = 'https://www.googleapis.com/books/v1/volumes?q='
-  //const uri = 'http://localhost:3000/books?query='
 
   const handleSearch = async () => {
     if (query.length > 0) {
@@ -48,7 +54,28 @@ export default function BookSearch() {
       }
     }
   }
+  function SearchIcon() {
+    return <Ionicons name="search" size={16} color={'white'} />
+  }
 
+  function SearchBar() {
+    return (
+      <Card style={searchBarStyle.container}>
+        <TextInput
+          style={searchBarStyle.input}
+          placeholder="Search"
+          value={query}
+          onChangeText={setQuery}
+          onSubmitEditing={handleSearch}
+        />
+        <Button
+          round
+          onPress={handleSearch}
+          iconSource={() => <SearchIcon />}
+        />
+      </Card>
+    )
+  }
   const renderItem = ({ item }: { item: BookData }) => {
     const title = item.volumeInfo.title //truncateEnd(item.volumeInfo.title, 50)
     const authors = item.volumeInfo.authors
@@ -63,33 +90,19 @@ export default function BookSearch() {
           authors={authors}
           pageCount={pages}
           img={img}
-          buttonLabel="+"
+          buttonLabel={added ? '-' : '+'}
           description={description}
-          buttonOnPress={() => addBook(item)}
+          buttonOnPress={() => handleAddBook(item)}
           onPress={() => {}}
         />
       </View>
     )
   }
-  const searchIcon = () => (
-    <Ionicons icon="search" size={16} color={colors.text} />
-  )
-
+  //fix L104 to use as a component <SearchBar />}
   return (
     <>
-      <Card style={searchBarStyle.container}>
-        <TextInput
-          style={searchBarStyle.input}
-          placeholder="Search"
-          value={query}
-          onChangeText={setQuery}
-          onSubmitEditing={handleSearch}
-        />
-        <Button round onPress={handleSearch} iconSource={searchIcon} />
-        <Ionicons icon="search" size={16} color={colors.text} />
-      </Card>
+      {SearchBar()}
       <View style={{ height: '100%', flex: 1 }}>
-        <Ionicons icon="search" size={16} color="white" />
         <FlashList
           data={books}
           renderItem={renderItem}

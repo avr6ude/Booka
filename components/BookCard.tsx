@@ -11,7 +11,7 @@ import BookModal from './Modal'
 
 interface BookProps {
   title: string
-  authors: string[]
+  authors?: string[]
   buttonLabel?: string
   img?: string
   pageCount: number
