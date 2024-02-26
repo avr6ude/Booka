@@ -1,6 +1,7 @@
 import { FlashList } from '@shopify/flash-list'
 import { useState } from 'react'
-import { View, TextInput, StyleSheet } from 'react-native'
+import { View, TextInput } from 'dripsy'
+import { StyleSheet } from 'react-native'
 import { Button, Card } from 'react-native-ui-lib'
 import useAddBook from '../helpers/useAddBook'
 import BookCard from './BookCard'
@@ -8,6 +9,8 @@ import { useTheme } from '@react-navigation/native'
 import { Ionicons } from '@expo/vector-icons'
 export default function BookSearch() {
   const colors = useTheme().colors
+
+  const searchBarStyles = {}
 
   const searchBarStyle = StyleSheet.create({
     container: {
@@ -18,7 +21,7 @@ export default function BookSearch() {
       marginBottom: 20,
       marginHorizontal: 10,
       borderRadius: 24,
-      backgroundColor: colors.background,
+      backgroundColor: '$background',
     },
     input: {
       flex: 1,
@@ -60,7 +63,7 @@ export default function BookSearch() {
 
   function SearchBar() {
     return (
-      <Card style={searchBarStyle.container}>
+      <View sx={searchBarStyles}>
         <TextInput
           style={searchBarStyle.input}
           placeholder="Search"
@@ -73,7 +76,7 @@ export default function BookSearch() {
           onPress={handleSearch}
           iconSource={() => <SearchIcon />}
         />
-      </Card>
+      </View>
     )
   }
   const renderItem = ({ item }: { item: BookData }) => {

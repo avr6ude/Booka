@@ -1,27 +1,16 @@
-import { useTheme } from '@react-navigation/native'
-import React from 'react'
-import { StyleSheet } from 'react-native'
-import { Text, View } from 'react-native-ui-lib'
+import { Text, View } from 'dripsy'
 
 export default function CommonHeader({ text }: { text: string }) {
-  const colors = useTheme().colors
-
-  const headerStyle = StyleSheet.create({
-    topBar: {
-      flexDirection: 'row',
-      justifyContent: 'center',
-      marginBottom: 20,
-    },
-    headerText: {
-      color: colors.text,
-    },
-  })
+  const containerStyles = {
+    backgroundColor: '$background',
+    flexDirection: 'row',
+    marginVertical: 20,
+    justifyContent: 'center',
+  }
 
   return (
-    <View style={headerStyle.topBar}>
-      <Text text30BO style={headerStyle.headerText}>
-        {text}
-      </Text>
+    <View sx={containerStyles}>
+      <Text variant="header">{text}</Text>
     </View>
   )
 }

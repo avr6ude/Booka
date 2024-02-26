@@ -6,7 +6,8 @@ import {
 import { useTheme } from '@react-navigation/native'
 import { useCallback, useMemo, useRef } from 'react'
 import { StyleSheet, Image } from 'react-native'
-import { Button, ListItem, Text, View } from 'react-native-ui-lib'
+import { Button, ListItem } from 'react-native-ui-lib'
+import { Text, View } from 'dripsy'
 import BookModal from './Modal'
 
 interface BookProps {
@@ -102,7 +103,12 @@ export default function BookCard({
       <ListItem style={cardStyle.item} onPress={handlePresentModalPress}>
         {img && <Image source={{ uri: img }} style={cardStyle.image} />}
         <View style={cardStyle.cardText}>
-          <Text text65 style={cardStyle.bookHeader}>
+          <Text
+            sx={{
+              color: '$text',
+              fontWeight: '600',
+            }}
+          >
             {title}
           </Text>
           {authors && authors.length > 0 && (

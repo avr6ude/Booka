@@ -12,14 +12,12 @@ import { useColorScheme } from '@/helpers/useColorScheme'
 import Colors from '@/constants/Colors'
 import SQLiteAdapter from '@nozbe/watermelondb/adapters/sqlite'
 import { AntDesign } from '@expo/vector-icons'
-import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
-import { GestureHandlerRootView } from 'react-native-gesture-handler'
-import { DatabaseProvider } from '@nozbe/watermelondb/DatabaseProvider'
 import booka from '@/model/schema'
 import { Database } from '@nozbe/watermelondb'
 import Author from '@/model/Author'
 import Book from '@/model/Book'
 import IndustryIdentifier from '@/model/IndustryIdentifier'
+import AppProvider from '@/components/AppProvider'
 export { ErrorBoundary } from 'expo-router'
 
 export const unstable_settings = {
@@ -67,51 +65,43 @@ function TabBarIcon(props: {
   return <AntDesign size={28} style={{ marginBottom: -3 }} {...props} />
 }
 
-function RootLayoutNav() {
+export function RootLayoutNav() {
   const colorScheme = useColorScheme()
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <DatabaseProvider database={database}>
-        <GestureHandlerRootView style={{ flex: 1 }}>
-          <BottomSheetModalProvider>
-            <Tabs
-              screenOptions={{
-                tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-                headerShown: false,
-              }}
-            >
-              <Tabs.Screen
-                name="savedBooks"
-                options={{
-                  title: 'Saved Books',
-                  tabBarIcon: ({ color }) => (
-                    <TabBarIcon name="book" color={color} />
-                  ),
-                }}
-              />
-              <Tabs.Screen
-                name="add"
-                options={{
-                  title: 'Add',
-                  tabBarIcon: ({ color }) => (
-                    <TabBarIcon name="pluscircle" color={color} />
-                  ),
-                }}
-              />
-              <Tabs.Screen
-                name="settings"
-                options={{
-                  title: 'Settings',
-                  tabBarIcon: ({ color }) => (
-                    <TabBarIcon name="setting" color={color} />
-                  ),
-                }}
-              />
-            </Tabs>
-          </BottomSheetModalProvider>
-        </GestureHandlerRootView>
-      </DatabaseProvider>
-    </ThemeProvider>
+    <AppProvider>
+      <Tabs
+        screenOptions={{
+          tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+          headerShown: false,
+        }}
+      >
+        <Tabs.Screen
+          name="index"
+          options={{
+            title: 'Favorites',
+            tabBarIcon: ({ color }) => <TabBarIcon name="book" color={color} />,
+          }}
+        />
+        <Tabs.Screen
+          name="add"
+          options={{
+            title: 'Add',
+            tabBarIcon: ({ color }) => (
+              <TabBarIcon name="pluscircle" color={color} />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="settings"
+          options={{
+            title: 'Settings',
+            tabBarIcon: ({ color }) => (
+              <TabBarIcon name="setting" color={color} />
+            ),
+          }}
+        />
+      </Tabs>
+    </AppProvider>
   )
 }

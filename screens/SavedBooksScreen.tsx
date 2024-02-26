@@ -1,4 +1,4 @@
-import { SafeAreaView, View } from 'react-native'
+import { SafeAreaView, View } from 'dripsy'
 import CommonHeader from '../components/CommonHeader'
 import { FlashList } from '@shopify/flash-list'
 import truncateEnd from '../helpers/truncateEnd'
@@ -44,7 +44,12 @@ export default function SavedBooksScreen() {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView
+      sx={{
+        backgroundColor: '$background',
+      }}
+      style={{ flex: 1 }}
+    >
       <CommonHeader text="My books" />
       <FlashList
         data={books}
