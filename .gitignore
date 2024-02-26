@@ -134,3 +134,12 @@ docs/pages/versions/*/react-native/*.diff
 
 expo-env.d.ts
 # @end expo-cli
+
+# yarn
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
