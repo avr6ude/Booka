@@ -10,6 +10,14 @@ const darkColors = {
   $tabIconDefault: '#ccc',
   $tabIconSelected: tintColorDark,
 }
+const lightColors = {
+  $text: '#000',
+  $background: '#fff',
+  $tint: tintColorLight,
+  $tabIconDefault: '#ccc',
+  $tabIconSelected: tintColorLight,
+}
+
 const textSizes = {
   small: 12,
   body: 16,
@@ -17,22 +25,35 @@ const textSizes = {
   header: 32,
 }
 
-const fonts = {
+const text = {
+  small: {
+    fontSize: textSizes.small,
+    color: '$text',
+  },
   body: {
     fontSize: textSizes.body,
-    color: darkColors.$text,
+    color: '$text',
+  },
+  title: {
+    fontSize: textSizes.title,
+    color: '$text',
   },
   header: {
     fontSize: textSizes.header,
-    color: darkColors.$text,
+    color: '$text',
   },
 }
 
 const theme = makeTheme({
   colors: darkColors,
-  text: fonts,
-  forms: fonts,
+  text,
+  forms: text,
 })
+
+const themeLight = {
+  ...theme,
+  colors: lightColors,
+}
 
 type MyTheme = typeof theme
 
@@ -41,4 +62,4 @@ declare module 'dripsy' {
   interface DripsyCustomTheme extends MyTheme {}
 }
 
-export default theme
+export { theme, themeLight }
