@@ -3,12 +3,15 @@ import { makeTheme } from 'dripsy'
 const tintColorLight = '#2f95dc'
 const tintColorDark = '#fff'
 
+const buttonBg = '#2f95dc'
+
 const darkColors = {
   $text: '#fff',
   $background: '#000',
   $tint: tintColorDark,
   $tabIconDefault: '#ccc',
   $tabIconSelected: tintColorDark,
+  $button: buttonBg,
 }
 const lightColors = {
   $text: '#000',
@@ -16,6 +19,7 @@ const lightColors = {
   $tint: tintColorLight,
   $tabIconDefault: '#ccc',
   $tabIconSelected: tintColorLight,
+  $button: buttonBg,
 }
 
 const textSizes = {
@@ -41,6 +45,18 @@ const text = {
   header: {
     fontSize: textSizes.header,
     color: '$text',
+    fontWeight: 'bold',
+  },
+}
+
+const button = {
+  primary: {
+    bg: '$button',
+    color: '$text',
+  },
+  secondary: {
+    bg: '$button',
+    color: '$text',
   },
 }
 
@@ -48,6 +64,7 @@ const theme = makeTheme({
   colors: darkColors,
   text,
   forms: text,
+  button,
 })
 
 const themeLight = {

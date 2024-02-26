@@ -8,6 +8,7 @@ export default function CommonHeader({ text }: { text: string }) {
     marginVertical: 20,
     justifyContent: 'center',
   })
+
   return (
     <View sx={containerStyles}>
       <Text variant="header">{text}</Text>
