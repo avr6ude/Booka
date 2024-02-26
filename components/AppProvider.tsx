@@ -1,5 +1,5 @@
 import { database } from '@/app/_layout'
-import { theme, themeLight } from '@/constants/themes'
+import theme from '@/constants/themes'
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import { DatabaseProvider } from '@nozbe/watermelondb/DatabaseProvider'
 import { DripsyProvider } from 'dripsy'
@@ -10,7 +10,7 @@ export default function AppProvider({ children }: any) {
   const colorMode = useColorScheme()
 
   return (
-    <DripsyProvider theme={colorMode === 'dark' ? theme : themeLight}>
+    <DripsyProvider theme={theme}>
       <DatabaseProvider database={database}>
         <GestureHandlerRootView style={{ flex: 1 }}>
           <BottomSheetModalProvider>{children}</BottomSheetModalProvider>

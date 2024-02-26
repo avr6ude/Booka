@@ -17,38 +17,28 @@ const textSizes = {
   header: 32,
 }
 
+const fonts = {
+  body: {
+    fontSize: textSizes.body,
+    color: darkColors.$text,
+  },
+  header: {
+    fontSize: textSizes.header,
+    color: darkColors.$text,
+  },
+}
+
 const theme = makeTheme({
   colors: darkColors,
-  text: {
-    body: {
-      fontSize: textSizes.body,
-      color: darkColors.$text,
-    },
-    header: {
-      fontSize: textSizes.header,
-      color: darkColors.$text,
-    },
-  },
-  textSizes,
+  text: fonts,
+  forms: fonts,
 })
 
-type AppTheme = typeof themeLight
+type MyTheme = typeof theme
 
 declare module 'dripsy' {
-  interface DisplayCustomTheme extends AppTheme {}
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface DripsyCustomTheme extends MyTheme {}
 }
 
-const lightColors: typeof darkColors = {
-  $text: '#000',
-  $background: '#fff',
-  $tint: tintColorLight,
-  $tabIconDefault: '#ccc',
-  $tabIconSelected: tintColorLight,
-}
-
-const themeLight = makeTheme({
-  ...theme,
-  colors: lightColors,
-})
-
-export { theme, themeLight }
+export default theme

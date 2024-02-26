@@ -4,18 +4,18 @@
     "jsx": "react-jsx",
     "strict": true,
     "paths": {
-      "@/*": ["./*"],
+      "@/*": ["./*"]
     },
     "target": "ESNext",
     "module": "ESNext",
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
+    "emitDecoratorMetadata": true
   },
   "include": [
     "**/*.ts",
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts",
-    "index.js",
-  ],
+    "index.js"
+  ]
 }

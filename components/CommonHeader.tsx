@@ -1,15 +1,16 @@
-import { Text, View } from 'dripsy'
+import { Text, View, useSx } from 'dripsy'
 
 export default function CommonHeader({ text }: { text: string }) {
-  const containerStyles = {
-    backgroundColor: '$background',
-    flexDirection: 'row',
-    marginVertical: 20,
-    justifyContent: 'center',
-  }
+  const sx = useSx()
 
   return (
-    <View sx={containerStyles}>
+    <View
+      sx={{
+        flexDirection: 'row',
+        marginVertical: 20,
+        justifyContent: 'center',
+      }}
+    >
       <Text variant="header">{text}</Text>
     </View>
   )

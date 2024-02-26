@@ -13,7 +13,6 @@
     "preset": "jest-expo"
   },
   "dependencies": {
-    "@": "morrowdigital/watermelondb-expo-plugin",
     "@expo/config-plugins": "^7.8.4",
     "@expo/vector-icons": "^14.0.0",
     "@gorhom/bottom-sheet": "^4.6.1",
