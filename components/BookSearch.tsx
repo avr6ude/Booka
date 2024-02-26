@@ -1,36 +1,37 @@
 import { FlashList } from '@shopify/flash-list'
 import { useState } from 'react'
-import { View, TextInput } from 'dripsy'
-import { StyleSheet } from 'react-native'
-import { Button, Card } from 'react-native-ui-lib'
+import { View, TextInput, useSx } from 'dripsy'
 import useAddBook from '../helpers/useAddBook'
 import BookCard from './BookCard'
-import { useTheme } from '@react-navigation/native'
-import { Ionicons } from '@expo/vector-icons'
+import Button from './Button'
 export default function BookSearch() {
-  const colors = useTheme().colors
+  const sx = useSx()
 
-  const searchBarStyles = {}
-
-  const searchBarStyle = StyleSheet.create({
-    container: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignContent: 'center',
-      padding: 10,
-      marginBottom: 20,
-      marginHorizontal: 10,
-      borderRadius: 24,
-      backgroundColor: '$background',
+  const container = sx({
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignContent: 'center',
+    padding: 10,
+    marginBottom: 20,
+    marginHorizontal: 10,
+    borderRadius: 24,
+    backgroundColor: '$background',
+    shadowColor: '$text',
+    shadowOffset: {
+      width: 0.5,
+      height: 2,
     },
-    input: {
-      flex: 1,
-      backgroundColor: colors.background,
-      color: colors.text,
-      borderRadius: 20,
-      padding: 10,
-      marginRight: 10,
-    },
+    shadowOpacity: 0.15,
+    shadowRadius: 3.84,
+    elevation: 5,
+  })
+  const searchBarStyles = sx({
+    flex: 1,
+    backgroundColor: '$background',
+    color: '$text',
+    borderRadius: 20,
+    padding: 10,
+    marginRight: 10,
   })
 
   const [query, setQuery] = useState<string>('')
@@ -57,25 +58,18 @@ export default function BookSearch() {
       }
     }
   }
-  function SearchIcon() {
-    return <Ionicons name="search" size={16} color={'white'} />
-  }
 
   function SearchBar() {
     return (
-      <View sx={searchBarStyles}>
+      <View sx={container}>
         <TextInput
-          style={searchBarStyle.input}
+          style={searchBarStyles}
           placeholder="Search"
           value={query}
           onChangeText={setQuery}
           onSubmitEditing={handleSearch}
         />
-        <Button
-          round
-          onPress={handleSearch}
-          iconSource={() => <SearchIcon />}
-        />
+        <Button round onPress={handleSearch} iconName="search" />
       </View>
     )
   }

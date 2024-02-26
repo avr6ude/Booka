@@ -6,9 +6,10 @@ import {
 import { useTheme } from '@react-navigation/native'
 import { useCallback, useMemo, useRef } from 'react'
 import { StyleSheet, Image } from 'react-native'
-import { Button, ListItem } from 'react-native-ui-lib'
+import { ListItem } from 'react-native-ui-lib'
 import { Text, View } from 'dripsy'
 import BookModal from './Modal'
+import Button from './Button'
 
 interface BookProps {
   title: string
@@ -124,11 +125,10 @@ export default function BookCard({
       </ListItem>
       <View style={cardStyle.buttonContainer}>
         <Button
-          style={cardStyle.button}
+          type="secondary"
           round
-          size={'small'}
-          label={buttonLabel}
-          onPress={buttonOnPress}
+          title={buttonLabel}
+          onPress={() => buttonOnPress}
         />
       </View>
       <BottomSheetModal
