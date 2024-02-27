@@ -34,7 +34,6 @@ export default function BookCard({
   description,
   buttonOnPress,
 }: BookProps) {
-  const colors = useTheme().colors
   const sx = useSx()
 
   const container = sx({

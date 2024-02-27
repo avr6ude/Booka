@@ -23,7 +23,7 @@ export default function BookSearch() {
     },
     shadowOpacity: 0.2,
     shadowRadius: 3.84,
-    elevation: 5,
+    elevation: 10,
   })
 
   const searchBarStyles = sx({
