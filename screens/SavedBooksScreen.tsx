@@ -6,7 +6,7 @@ import BookCard from '../components/BookCard'
 import useRemoveBook from '../helpers/useRemoveBook'
 import { useDatabase } from '@nozbe/watermelondb/hooks'
 import { useEffect, useState } from 'react'
-import Book from '@/model/Book'
+import Book from '@/models/Book'
 
 export default function SavedBooksScreen() {
   const database = useDatabase()
