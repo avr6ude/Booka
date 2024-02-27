@@ -1,10 +1,6 @@
-import Author from '@/model/Author'
-import Book from '@/model/Book'
-import IndustryIdentifier from '@/model/IndustryIdentifier'
-import { Q } from '@nozbe/watermelondb'
-import { where } from '@nozbe/watermelondb/QueryDescription'
+import Author from '@/models/Author'
+import Book from '@/models/Book'
 import { useDatabase } from '@nozbe/watermelondb/hooks'
-import { useCallback } from 'react'
 
 interface StrippedBookData {
   title: string
