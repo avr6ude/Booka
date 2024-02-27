@@ -3,7 +3,7 @@ import { makeTheme } from 'dripsy'
 const tintColorLight = '#2f95dc'
 const tintColorDark = '#fff'
 
-const buttonBg = '#2f95dc'
+const buttonBg = '#6d3178'
 
 const darkColors = {
   $text: '#fff',
@@ -25,6 +25,7 @@ const lightColors = {
 const textSizes = {
   small: 12,
   body: 16,
+  bookTitle: 20,
   title: 24,
   header: 32,
 }
@@ -41,11 +42,21 @@ const text = {
   title: {
     fontSize: textSizes.title,
     color: '$text',
+    fontWeight: 'bold',
   },
   header: {
     fontSize: textSizes.header,
     color: '$text',
     fontWeight: 'bold',
+  },
+  bold: {
+    fontSize: textSizes.body,
+    fontWeight: 'bold',
+  },
+  bookTitle: {
+    fontSize: textSizes.bookTitle,
+    fontWeight: 'bold',
+    color: '$text',
   },
 }
 

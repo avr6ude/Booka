@@ -13,24 +13,25 @@ export default function BookSearch() {
     alignContent: 'center',
     padding: 10,
     marginBottom: 20,
-    marginHorizontal: 10,
-    borderRadius: 24,
+    marginHorizontal: 15,
+    borderRadius: 32,
     backgroundColor: '$background',
     shadowColor: '$text',
     shadowOffset: {
       width: 0.5,
       height: 2,
     },
-    shadowOpacity: 0.15,
+    shadowOpacity: 0.2,
     shadowRadius: 3.84,
     elevation: 5,
   })
+
   const searchBarStyles = sx({
     flex: 1,
     backgroundColor: '$background',
     color: '$text',
     borderRadius: 20,
-    padding: 10,
+    padding: 5,
     marginRight: 10,
   })
 
@@ -69,7 +70,7 @@ export default function BookSearch() {
           onChangeText={setQuery}
           onSubmitEditing={handleSearch}
         />
-        <Button round onPress={handleSearch} iconName="search" />
+        <Button round onPress={handleSearch} iconName="search" iconSize={20} />
       </View>
     )
   }

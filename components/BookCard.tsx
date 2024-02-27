@@ -1,13 +1,8 @@
 import Ionicons from '@expo/vector-icons/Ionicons'
-import {
-  BottomSheetModal,
-  BottomSheetModalProvider,
-} from '@gorhom/bottom-sheet'
+import { BottomSheetModal } from '@gorhom/bottom-sheet'
 import { useTheme } from '@react-navigation/native'
 import { useCallback, useMemo, useRef } from 'react'
-import { StyleSheet, Image } from 'react-native'
-import { ListItem } from 'react-native-ui-lib'
-import { Text, View } from 'dripsy'
+import { Text, View, useSx, Image, Pressable } from 'dripsy'
 import BookModal from './Modal'
 import Button from './Button'
 
@@ -32,52 +27,44 @@ export default function BookCard({
   buttonOnPress,
 }: BookProps) {
   const colors = useTheme().colors
+  const sx = useSx()
 
-  const cardStyle = StyleSheet.create({
-    card: {
-      paddingHorizontal: 10,
-      flexDirection: 'row',
-      marginBottom: 10,
-    },
-    item: {
-      height: 'auto',
-      width: '80%',
-    },
-    cardText: {
-      flexDirection: 'column',
-      rowGap: 5,
-      paddingLeft: 10,
-    },
-    pages: {
-      flexDirection: 'row',
-      columnGap: 5,
-    },
-    pagesText: {
-      color: 'lightgray',
-      // fontWeight: 'bold'
-    },
-    image: {
-      width: 100,
-      height: 150,
-      borderRadius: 8,
-    },
-    bookHeader: {
-      color: colors.text,
-    },
-    bookAuthors: {
-      color: colors.text,
-    },
-    buttonContainer: {
-      flex: 1,
-      alignItems: 'flex-end',
-      justifyContent: 'center',
-    },
-    button: {
-      height: 30,
-      width: 30,
-    },
+  const container = sx({
+    paddingHorizontal: 10,
+    flexDirection: 'row',
+    marginBottom: 10,
+    justifyContent: 'space-between',
   })
 
+  const contentStyles = sx({
+    height: 'auto',
+    width: '50%',
+    flexDirection: 'row',
+  })
+
+  const buttonContainer = sx({
+    flex: 1,
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+  })
+
+  const textContainer = sx({
+    flexDirection: 'column',
+    alignItems: 'start',
+    rowGap: 5,
+  })
+
+  const imageStyle = sx({
+    width: 100,
+    height: 150,
+    borderRadius: 8,
+    marginRight: 10,
+  })
+
+  const pagesStyle = sx({
+    flexDirection: 'row',
+    columnGap: 5,
+  })
   const bottomSheetModalRef = useRef<BottomSheetModal>(null)
 
   // Function to open the bottom sheet
@@ -100,30 +87,23 @@ export default function BookCard({
   const snapPoints = useMemo(() => ['25%', '85%'], [])
 
   return (
-    <View style={cardStyle.card}>
-      <ListItem style={cardStyle.item} onPress={handlePresentModalPress}>
-        {img && <Image source={{ uri: img }} style={cardStyle.image} />}
-        <View style={cardStyle.cardText}>
-          <Text
-            sx={{
-              color: '$text',
-              fontWeight: '600',
-            }}
-          >
-            {title}
-          </Text>
+    <View sx={container}>
+      <Pressable sx={contentStyles} onPress={handlePresentModalPress}>
+        {img && <Image source={{ uri: img }} sx={imageStyle} />}
+        <View sx={textContainer}>
+          <Text variant="bookTitle">{title}</Text>
           {authors && authors.length > 0 && (
-            <Text style={cardStyle.bookAuthors}>By {authors.join(', ')}</Text>
+            <Text>By {authors.join(', ')}</Text>
           )}
           {pageCount > 0 && (
-            <View style={cardStyle.pages}>
+            <View sx={pagesStyle}>
               <Ionicons name="layers-outline" size={16} color={colors.text} />
-              <Text style={cardStyle.pagesText}>{pageCount} pages</Text>
+              <Text variant="small">{pageCount} pages</Text>
             </View>
           )}
         </View>
-      </ListItem>
-      <View style={cardStyle.buttonContainer}>
+      </Pressable>
+      <View sx={buttonContainer}>
         <Button
           type="secondary"
           round

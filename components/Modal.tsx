@@ -4,7 +4,7 @@ import { StyleSheet, ScrollView } from 'react-native'
 import useAddBook from '@/helpers/useAddBook'
 import Colors from '@/constants/Colors'
 import { useTheme } from '@react-navigation/native'
-import Book from '@/model/Book'
+import Book from '@/models/Book'
 
 export default function BookModal({
   title,
