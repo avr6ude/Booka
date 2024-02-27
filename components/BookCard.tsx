@@ -1,11 +1,16 @@
 import Ionicons from '@expo/vector-icons/Ionicons'
-import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet'
+import {
+  BottomSheetBackgroundProps,
+  BottomSheetModal,
+  BottomSheetView,
+} from '@gorhom/bottom-sheet'
 import { useTheme } from '@react-navigation/native'
 import { useCallback, useMemo, useRef } from 'react'
-import { Text, View, useSx, Image, Pressable } from 'dripsy'
+import { Text, View, useSx, Pressable } from 'dripsy'
 import BookModal from './BookModal'
 import Button from './Button'
 import ThumbnailImage from './ThumbnailImage'
+import Animated, { useAnimatedStyle } from 'react-native-reanimated'
 
 export interface BookProps {
   title: string
@@ -90,6 +95,15 @@ export default function BookCard({
 
   const snapPoints = useMemo(() => ['25%', '90%'], [])
 
+  function CustomBackground({ style }: BottomSheetBackgroundProps) {
+    const containerAnimatedStyle = sx({ backgroundColor: '$background' })
+    const containerStyle = useMemo(
+      () => [style, containerAnimatedStyle],
+      [style, containerAnimatedStyle]
+    )
+    return <Animated.View pointerEvents="none" style={containerStyle} />
+  }
+
   return (
     <View sx={container}>
       <Pressable sx={contentStyles} onPress={handlePresentModalPress}>
@@ -127,9 +141,7 @@ export default function BookCard({
         index={1}
         snapPoints={snapPoints}
         style={shadowStyle}
-        backgroundStyle={{
-          backgroundColor: 'black',
-        }}
+        backgroundComponent={CustomBackground}
         handleIndicatorStyle={{
           backgroundColor: 'white',
         }}
