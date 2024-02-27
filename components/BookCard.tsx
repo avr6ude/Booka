@@ -1,12 +1,12 @@
 import Ionicons from '@expo/vector-icons/Ionicons'
-import { BottomSheetModal } from '@gorhom/bottom-sheet'
+import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet'
 import { useTheme } from '@react-navigation/native'
 import { useCallback, useMemo, useRef } from 'react'
 import { Text, View, useSx, Image, Pressable } from 'dripsy'
-import BookModal from './Modal'
+import BookModal from './BookModal'
 import Button from './Button'
 
-interface BookProps {
+export interface BookProps {
   title: string
   authors?: string[]
   buttonLabel?: string
@@ -65,26 +65,36 @@ export default function BookCard({
     flexDirection: 'row',
     columnGap: 5,
   })
+
+  const shadowStyle = sx({
+    backgroundColor: 'black',
+    borderRadius: 32,
+    shadowColor: 'white',
+    shadowOffset: {
+      width: 0,
+      height: 16,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 24.0,
+    elevation: 16,
+  })
   const bottomSheetModalRef = useRef<BottomSheetModal>(null)
 
-  // Function to open the bottom sheet
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present()
   }, [])
 
-  // Bottom sheet content
   const renderContent = () => (
     <BookModal
       title={title}
       description={description}
       authors={authors}
-      thumbnail={img}
+      img={img}
       pageCount={pageCount}
     />
   )
 
-  // Bottom sheet modal configuration
-  const snapPoints = useMemo(() => ['25%', '85%'], [])
+  const snapPoints = useMemo(() => ['25%', '90%'], [])
 
   return (
     <View sx={container}>
@@ -115,11 +125,21 @@ export default function BookCard({
         ref={bottomSheetModalRef}
         index={1}
         snapPoints={snapPoints}
+        style={shadowStyle}
         backgroundStyle={{
-          backgroundColor: colors.background,
+          backgroundColor: 'black',
+        }}
+        handleIndicatorStyle={{
+          backgroundColor: 'white',
         }}
       >
-        {renderContent()}
+        <BottomSheetView
+          style={{
+            flex: 1,
+          }}
+        >
+          {renderContent()}
+        </BottomSheetView>
       </BottomSheetModal>
     </View>
   )

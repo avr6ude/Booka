@@ -75,7 +75,7 @@ export default function BookSearch() {
     )
   }
   const renderItem = ({ item }: { item: BookData }) => {
-    const title = item.volumeInfo.title //truncateEnd(item.volumeInfo.title, 50)
+    const title = item.volumeInfo.title
     const authors = item.volumeInfo.authors
     const img = item.volumeInfo.imageLinks?.thumbnail
     const pages = item.volumeInfo.pageCount
