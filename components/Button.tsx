@@ -4,6 +4,7 @@ import { IconProps } from '@expo/vector-icons/build/createIconSet'
 
 interface ButtonProps {
   title?: string
+  full?: boolean
   borderRadius?: number
   onPress: () => void
   color?: string
@@ -26,6 +27,7 @@ enum buttonSize {
 
 export default function Button({
   title,
+  full,
   onPress,
   color, // default color
   round = false,
@@ -67,7 +69,7 @@ export default function Button({
     paddingHorizontal,
     paddingVertical,
     height,
-    width,
+    width: full ? '100%' : width,
     borderRadius: borderSize,
     backgroundColor,
   })
