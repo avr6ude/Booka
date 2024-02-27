@@ -1,4 +1,3 @@
-import Ionicons from '@expo/vector-icons/Ionicons'
 import {
   BottomSheetBackgroundProps,
   BottomSheetModal,
@@ -13,6 +12,7 @@ import ThumbnailImage from './ThumbnailImage'
 import Animated from 'react-native-reanimated'
 import Author from '@/models/Author'
 import PageCounter from './PageCounter'
+import truncateEnd from '../helpers/truncateEnd'
 
 export interface BookProps {
   title: string
@@ -101,6 +101,9 @@ export default function BookCard({
     return <Animated.View pointerEvents="none" style={containerStyle} />
   }
 
+  const truncatedTitle = truncateEnd(title, 35)
+  const truncatedAuthors = truncateEnd(authors.join(', '), 35)
+
   return (
     <View sx={container}>
       <Pressable sx={contentStyles} onPress={handlePresentModalPress}>
@@ -113,9 +116,9 @@ export default function BookCard({
           />
         )}
         <View sx={textContainer}>
-          <Text variant="bookTitle">{title}</Text>
+          <Text variant="bookTitle">{truncatedTitle}</Text>
           {authors && authors.length > 0 ? (
-            <Text>By {authors.join(', ')}</Text>
+            <Text>By {truncatedAuthors}</Text>
           ) : (
             <Text>No authors data</Text>
           )}
