@@ -5,6 +5,7 @@ import { useCallback, useMemo, useRef } from 'react'
 import { Text, View, useSx, Image, Pressable } from 'dripsy'
 import BookModal from './BookModal'
 import Button from './Button'
+import ThumbnailImage from './ThumbnailImage'
 
 export interface BookProps {
   title: string
@@ -54,13 +55,6 @@ export default function BookCard({
     rowGap: 5,
   })
 
-  const imageStyle = sx({
-    width: 100,
-    height: 150,
-    borderRadius: 8,
-    marginRight: 10,
-  })
-
   const pagesStyle = sx({
     flexDirection: 'row',
     columnGap: 5,
@@ -99,7 +93,14 @@ export default function BookCard({
   return (
     <View sx={container}>
       <Pressable sx={contentStyles} onPress={handlePresentModalPress}>
-        {img && <Image source={{ uri: img }} sx={imageStyle} />}
+        {img && (
+          <ThumbnailImage
+            src={img}
+            style={{
+              marginRight: 10,
+            }}
+          />
+        )}
         <View sx={textContainer}>
           <Text variant="bookTitle">{title}</Text>
           {authors && authors.length > 0 && (

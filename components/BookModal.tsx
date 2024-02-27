@@ -5,6 +5,7 @@ import { useTheme } from '@react-navigation/native'
 import Book from '@/models/Book'
 import Button from './Button'
 import { BookProps } from './BookCard'
+import ThumbnailImage from './ThumbnailImage'
 
 export default function BookModal({
   title,
@@ -27,13 +28,6 @@ export default function BookModal({
     rowGap: 20,
   })
 
-  const imageStyle = sx({
-    width: 100,
-    height: 150,
-    borderRadius: 8,
-    margin: 20,
-  })
-
   const bookInfoStyle = sx({
     alignItems: 'center',
     textAlign: 'center',
@@ -52,7 +46,7 @@ export default function BookModal({
 
   return (
     <View sx={container}>
-      <Image source={{ uri: img }} sx={imageStyle} />
+      {img && <ThumbnailImage src={img} />}
       <View sx={bookInfoStyle}>
         <Text sx={{ textAlign: 'center' }} variant="title">
           {title}
