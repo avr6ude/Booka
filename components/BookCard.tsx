@@ -10,15 +10,17 @@ import { Text, View, useSx, Pressable } from 'dripsy'
 import BookModal from './BookModal'
 import Button from './Button'
 import ThumbnailImage from './ThumbnailImage'
-import Animated, { useAnimatedStyle } from 'react-native-reanimated'
+import Animated from 'react-native-reanimated'
+import Author from '@/models/Author'
+import PageCounter from './PageCounter'
 
 export interface BookProps {
   title: string
-  authors?: string[]
-  buttonLabel?: string
-  img?: string
-  pageCount: number
+  authors: Author[] | string[]
   description: string
+  thumbnail: string
+  buttonLabel?: string
+  pageCount: number
   onPress?: () => void
   buttonOnPress?: () => void
 }
@@ -26,7 +28,7 @@ export interface BookProps {
 export default function BookCard({
   title,
   authors,
-  img = '',
+  thumbnail,
   buttonLabel = '+',
   pageCount,
   description,
@@ -60,11 +62,6 @@ export default function BookCard({
     rowGap: 5,
   })
 
-  const pagesStyle = sx({
-    flexDirection: 'row',
-    columnGap: 5,
-  })
-
   const shadowStyle = sx({
     backgroundColor: 'black',
     borderRadius: 32,
@@ -88,7 +85,7 @@ export default function BookCard({
       title={title}
       description={description}
       authors={authors}
-      img={img}
+      thumbnail={thumbnail}
       pageCount={pageCount}
     />
   )
@@ -107,9 +104,9 @@ export default function BookCard({
   return (
     <View sx={container}>
       <Pressable sx={contentStyles} onPress={handlePresentModalPress}>
-        {img && (
+        {thumbnail && (
           <ThumbnailImage
-            src={img}
+            src={thumbnail}
             style={{
               marginRight: 10,
             }}
@@ -117,15 +114,12 @@ export default function BookCard({
         )}
         <View sx={textContainer}>
           <Text variant="bookTitle">{title}</Text>
-          {authors && authors.length > 0 && (
+          {authors && authors.length > 0 ? (
             <Text>By {authors.join(', ')}</Text>
+          ) : (
+            <Text>No authors data</Text>
           )}
-          {pageCount > 0 && (
-            <View sx={pagesStyle}>
-              <Ionicons name="layers-outline" size={16} color={colors.text} />
-              <Text variant="small">{pageCount} pages</Text>
-            </View>
-          )}
+          <PageCounter count={pageCount} />
         </View>
       </Pressable>
       <View sx={buttonContainer}>

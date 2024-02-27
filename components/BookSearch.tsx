@@ -87,7 +87,7 @@ export default function BookSearch() {
           title={title}
           authors={authors}
           pageCount={pages}
-          img={img}
+          thumbnail={img}
           buttonLabel={added ? '-' : '+'}
           description={description}
           buttonOnPress={() => handleAddBook(item)}

@@ -6,12 +6,13 @@ import Book from '@/models/Book'
 import Button from './Button'
 import { BookProps } from './BookCard'
 import ThumbnailImage from './ThumbnailImage'
+import PageCounter from './PageCounter'
 
 export default function BookModal({
   title,
   description,
   authors,
-  img,
+  thumbnail,
   pageCount,
 }: BookProps) {
   const addBook = useAddBook()
@@ -46,13 +47,17 @@ export default function BookModal({
 
   return (
     <View sx={container}>
-      {img && <ThumbnailImage src={img} />}
+      {thumbnail && <ThumbnailImage src={thumbnail} />}
       <View sx={bookInfoStyle}>
         <Text sx={{ textAlign: 'center' }} variant="title">
           {title}
         </Text>
-        <Text>{authors}</Text>
-        {pageCount != 0 && <Text variant="small">{pageCount} pages</Text>}
+        {authors && authors.length > 0 ? (
+          <Text>By {authors.join(', ')}</Text>
+        ) : (
+          <Text>No authors data</Text>
+        )}
+        <PageCounter count={pageCount} />
       </View>
       <ScrollView>
         {description ? (

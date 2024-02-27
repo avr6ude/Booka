@@ -2,6 +2,7 @@ import { Model } from '@nozbe/watermelondb'
 import { field, children, lazy } from '@nozbe/watermelondb/decorators'
 import IndustryIdentifier from './IndustryIdentifier'
 import { Associations } from '@nozbe/watermelondb/Model'
+import Author from './Author'
 
 class Book extends Model {
   static table = 'books'
@@ -16,7 +17,7 @@ class Book extends Model {
   @field('small_thumbnail') smallThumbnail!: string
   @field('thumbnail') thumbnail!: string
 
-  @children('authors') authors!: any
+  @children('authors') authors!: Author[]
   @children('industry_identifiers') industryIdentifiers!: IndustryIdentifier[]
 
   @lazy
