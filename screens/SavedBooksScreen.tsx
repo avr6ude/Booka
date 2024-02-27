@@ -1,52 +1,59 @@
-import { SafeAreaView, View } from 'dripsy'
+import { SafeAreaView } from 'dripsy'
 import CommonHeader from '../components/CommonHeader'
 import { FlashList } from '@shopify/flash-list'
-import truncateEnd from '../helpers/truncateEnd'
-import BookCard, { BookProps } from '../components/BookCard'
+import BookCard from '../components/BookCard'
 import useRemoveBook from '../helpers/useRemoveBook'
 import { useDatabase } from '@nozbe/watermelondb/hooks'
 import { useEffect, useState } from 'react'
 import Book from '@/models/Book'
 import Author from '@/models/Author'
 import { Q } from '@nozbe/watermelondb'
+import { from, switchMap } from 'rxjs'
 
 export default function SavedBooksScreen() {
   const database = useDatabase()
-  const [books, setBooks] = useState<any>([])
+  const [books, setBooks] = useState<any>([]) // fix type
   const removeBook = useRemoveBook()
 
+  function getBooksObservable() {
+    const bookCollection = database.collections.get<Book>('books')
+    return from(bookCollection.query().observe())
+  }
+
   useEffect(() => {
-    const fetchBooks = async () => {
-      const bookCollection = database.collections.get<Book>('books')
-      const authorsCollection = database.collections.get<Author>('authors')
-      const fetchedBooks = await bookCollection.query().fetch()
-
-      const booksWithAuthors = await Promise.all(
-        fetchedBooks.map(async (book) => {
-          const authors = await authorsCollection
-            .query(Q.where('book_id', book.id))
-            .fetch()
-
-          const authorNames = authors.map((author) => author.name)
-
-          const bookData = {
-            id: book.id,
-            title: book.title,
-            authors: authorNames,
-            thumbnail: book.thumbnail,
-            pageCount: book.pageCount,
-            description: book.description,
-          }
-
-          return bookData
-        })
+    const subscription = getBooksObservable()
+      .pipe(
+        switchMap((books) =>
+          // Convert the operation to a Promise that resolves to the enriched books data
+          Promise.all(
+            books.map(async (book) => {
+              const authorsQuery = database.collections
+                .get<Author>('authors')
+                .query(Q.where('book_id', book.id))
+              const authors = await authorsQuery.fetch()
+              return {
+                id: book.id,
+                title: book.title,
+                authors: authors.map((author) => author.name),
+                thumbnail: book.thumbnail,
+                pageCount: book.pageCount,
+                description: book.description,
+              }
+            })
+          )
+        )
       )
+      .subscribe({
+        next: (booksWithAuthors) => {
+          setBooks(booksWithAuthors)
+        },
+        error: (err) => console.error('Error fetching books:', err),
+      })
 
-      setBooks(booksWithAuthors)
-    }
+    // Cleanup
+    return () => subscription.unsubscribe()
+  }, [])
 
-    fetchBooks()
-  }, [database])
   const renderItem = ({ item }: { item: Book }) => {
     const title = item.title
     const authors = item.authors

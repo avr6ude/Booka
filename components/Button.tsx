@@ -1,6 +1,7 @@
 import { Pressable, Text, useDripsyTheme, useSx } from 'dripsy'
 import { Ionicons } from '@expo/vector-icons'
 import { IconProps } from '@expo/vector-icons/build/createIconSet'
+import AnimatedPressable from './AnimatedPressable'
 
 interface ButtonProps {
   title?: string
@@ -79,7 +80,7 @@ export default function Button({
   })
 
   return (
-    <Pressable onPress={onPress} sx={buttonStyles}>
+    <AnimatedPressable onPress={onPress} style={buttonStyles}>
       {iconName && (
         <Ionicons
           name={iconName}
@@ -89,6 +90,6 @@ export default function Button({
         />
       )}
       {title && <Text sx={buttonTextStyles}>{title}</Text>}
-    </Pressable>
+    </AnimatedPressable>
   )
 }

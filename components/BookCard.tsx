@@ -3,9 +3,8 @@ import {
   BottomSheetModal,
   BottomSheetView,
 } from '@gorhom/bottom-sheet'
-import { useTheme } from '@react-navigation/native'
-import { useCallback, useMemo, useRef } from 'react'
-import { Text, View, useSx, Pressable } from 'dripsy'
+import { useCallback, useEffect, useMemo, useRef } from 'react'
+import { Text, View, useSx } from 'dripsy'
 import BookModal from './BookModal'
 import Button from './Button'
 import ThumbnailImage from './ThumbnailImage'
@@ -13,6 +12,7 @@ import Animated from 'react-native-reanimated'
 import Author from '@/models/Author'
 import PageCounter from './PageCounter'
 import truncateEnd from '../helpers/truncateEnd'
+import AnimatedPressable from './AnimatedPressable'
 
 export interface BookProps {
   title: string
@@ -22,7 +22,7 @@ export interface BookProps {
   buttonLabel?: string
   pageCount: number
   onPress?: () => void
-  buttonOnPress?: () => void
+  buttonOnPress: () => void
 }
 
 export default function BookCard({
@@ -86,6 +86,7 @@ export default function BookCard({
       authors={authors}
       thumbnail={thumbnail}
       pageCount={pageCount}
+      buttonOnPress={buttonOnPress}
     />
   )
 
@@ -101,11 +102,15 @@ export default function BookCard({
   }
 
   const truncatedTitle = truncateEnd(title, 35)
-  const truncatedAuthors = truncateEnd(authors.join(', '), 35)
+  const truncatedAuthors =
+    authors && authors.length > 0 && truncateEnd(authors.join(', '), 35)
 
   return (
     <View sx={container}>
-      <Pressable sx={contentStyles} onPress={handlePresentModalPress}>
+      <AnimatedPressable
+        style={contentStyles}
+        onPress={handlePresentModalPress}
+      >
         {thumbnail && (
           <ThumbnailImage
             src={thumbnail}
@@ -116,20 +121,20 @@ export default function BookCard({
         )}
         <View sx={textContainer}>
           <Text variant="bookTitle">{truncatedTitle}</Text>
-          {authors && authors.length > 0 ? (
+          {truncatedAuthors ? (
             <Text>By {truncatedAuthors}</Text>
           ) : (
             <Text>No authors data</Text>
           )}
           <PageCounter count={pageCount} />
         </View>
-      </Pressable>
+      </AnimatedPressable>
       <View sx={buttonContainer}>
         <Button
           type="secondary"
           round
           title={buttonLabel}
-          onPress={() => buttonOnPress}
+          onPress={buttonOnPress}
         />
       </View>
       <BottomSheetModal

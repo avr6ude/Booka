@@ -37,13 +37,11 @@ export default function BookSearch() {
 
   const [query, setQuery] = useState<string>('')
   const [books, setBooks] = useState<BookData[]>([])
-  const [added, setAdded] = useState<boolean>(false)
 
-  const addBook = useAddBook()
+  const { addBook } = useAddBook()
 
   const handleAddBook = (item: BookData) => {
     addBook(item)
-    setAdded(true)
   }
 
   const uri = 'https://www.googleapis.com/books/v1/volumes?q='
@@ -88,7 +86,7 @@ export default function BookSearch() {
           authors={authors}
           pageCount={pages}
           thumbnail={img}
-          buttonLabel={added ? '-' : '+'}
+          buttonLabel={'+'}
           description={description}
           buttonOnPress={() => handleAddBook(item)}
           onPress={() => {}}
