@@ -3,7 +3,7 @@ import {
   BottomSheetModal,
   BottomSheetView,
 } from '@gorhom/bottom-sheet'
-import { useCallback, useEffect, useMemo, useRef } from 'react'
+import { ReactNode, useCallback, useEffect, useMemo, useRef } from 'react'
 import { Text, View, useSx } from 'dripsy'
 import BookModal from './BookModal'
 import Button from './Button'
@@ -13,26 +13,28 @@ import Author from '@/models/Author'
 import PageCounter from './PageCounter'
 import truncateEnd from '../helpers/truncateEnd'
 import AnimatedPressable from './AnimatedPressable'
+import { children } from '@nozbe/watermelondb/decorators'
+import ChildrenProp from '@/models/ChildrenProp'
 
 export interface BookProps {
   title: string
   authors: Author[] | string[]
   description: string
   thumbnail: string
-  buttonLabel?: string
   pageCount: number
   onPress?: () => void
-  buttonOnPress: () => void
+  buttonTitle?: string
+  buttonOnPress?: () => void
 }
 
 export default function BookCard({
   title,
   authors,
   thumbnail,
-  buttonLabel = '+',
   pageCount,
   description,
-  buttonOnPress,
+  buttonTitle,
+  buttonOnPress = () => {},
 }: BookProps) {
   const sx = useSx()
 
@@ -133,7 +135,7 @@ export default function BookCard({
         <Button
           type="secondary"
           round
-          title={buttonLabel}
+          title={buttonTitle}
           onPress={buttonOnPress}
         />
       </View>

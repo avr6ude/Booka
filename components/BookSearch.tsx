@@ -1,9 +1,11 @@
 import { FlashList } from '@shopify/flash-list'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { View, TextInput, useSx } from 'dripsy'
 import useAddBook from '../helpers/useAddBook'
 import BookCard from './BookCard'
 import Button from './Button'
+import { useAtom } from 'jotai'
+import useRemoveBook from '@/helpers/useRemoveBook'
 export default function BookSearch() {
   const sx = useSx()
 
@@ -39,8 +41,7 @@ export default function BookSearch() {
   const [books, setBooks] = useState<BookData[]>([])
 
   const { addBook } = useAddBook()
-
-  const handleAddBook = (item: BookData) => addBook(item)
+  const removeBook = useRemoveBook()
 
   const uri = 'https://www.googleapis.com/books/v1/volumes?q='
 
@@ -70,7 +71,25 @@ export default function BookSearch() {
       </View>
     )
   }
-  const renderItem = ({ item }: { item: BookData }) => {
+
+  const BookItem = ({ item }: { item: BookData }) => {
+    const lastBookId = useRef(item.id)
+    const [isAdded, setAdded] = useState<boolean>(false)
+
+    if (item.id !== lastBookId.current) {
+      lastBookId.current = item.id
+      setAdded(false)
+    }
+
+    const handleAddBook = () => {
+      if (isAdded) {
+        removeBook(item.id)
+      } else {
+        addBook(item)
+      }
+      setAdded(!isAdded)
+    }
+
     const title = item.volumeInfo.title
     const authors = item.volumeInfo.authors
     const img = item.volumeInfo.imageLinks?.thumbnail
@@ -78,17 +97,15 @@ export default function BookSearch() {
     const description = item.volumeInfo.description
 
     return (
-      <View>
-        <BookCard
-          title={title}
-          authors={authors}
-          pageCount={pages}
-          thumbnail={img}
-          buttonLabel={'+'}
-          description={description}
-          buttonOnPress={() => handleAddBook(item)}
-        />
-      </View>
+      <BookCard
+        title={title}
+        authors={authors}
+        pageCount={pages}
+        thumbnail={img}
+        description={description}
+        buttonOnPress={() => handleAddBook()}
+        buttonTitle={isAdded ? '✓' : '+'}
+      />
     )
   }
   //fix L104 to use as a component <SearchBar />}
@@ -98,7 +115,7 @@ export default function BookSearch() {
       <View style={{ height: '100%', flex: 1 }}>
         <FlashList
           data={books}
-          renderItem={renderItem}
+          renderItem={({ item }) => <BookItem item={item} />}
           keyExtractor={(item) => item.id}
           estimatedItemSize={200}
         />
