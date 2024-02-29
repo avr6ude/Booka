@@ -4,20 +4,30 @@ import { FlashList } from '@shopify/flash-list'
 import BookCard from '../components/BookCard'
 import useRemoveBook from '../helpers/useRemoveBook'
 import { useDatabase } from '@nozbe/watermelondb/hooks'
-import { useEffect, useState } from 'react'
+import { createRef, useEffect, useRef, useState } from 'react'
 import Book from '@/models/Book'
 import Author from '@/models/Author'
 import { Q } from '@nozbe/watermelondb'
 import { from, switchMap } from 'rxjs'
+import { MotiView, AnimatePresence } from 'moti'
+import { LayoutAnimation } from 'react-native'
 
 export default function SavedBooksScreen() {
   const database = useDatabase()
   const [books, setBooks] = useState<any>([]) // fix type
   const removeBook = useRemoveBook()
+  const list = createRef<FlashList<Book>>()
 
   function getBooksObservable() {
     const bookCollection = database.collections.get<Book>('books')
     return from(bookCollection.query().observe())
+  }
+  function handleRemoveBook(bookId: string) {
+    setTimeout(() => {
+      removeBook(bookId)
+      list.current?.prepareForLayoutAnimationRender()
+      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
+    }, 10)
   }
 
   useEffect(() => {
@@ -60,15 +70,24 @@ export default function SavedBooksScreen() {
     const description = item.description
 
     return (
-      <BookCard
-        title={title}
-        pageCount={pages}
-        thumbnail={img}
-        description={description}
-        authors={authors}
-        buttonLabel="-"
-        buttonOnPress={() => removeBook(item.id)}
-      />
+      <AnimatePresence>
+        <MotiView
+          from={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.95 }}
+          key={item.id}
+        >
+          <BookCard
+            title={title}
+            pageCount={pages}
+            thumbnail={img}
+            description={description}
+            authors={authors}
+            buttonLabel="-"
+            buttonOnPress={() => handleRemoveBook(item.id)}
+          />
+        </MotiView>
+      </AnimatePresence>
     )
   }
 
@@ -81,6 +100,7 @@ export default function SavedBooksScreen() {
     >
       <CommonHeader text="My books" />
       <FlashList
+        ref={list}
         data={books}
         renderItem={renderItem}
         keyExtractor={(item) => item.id.toString()}

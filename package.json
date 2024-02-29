@@ -32,6 +32,7 @@
     "expo-web-browser": "~12.8.2",
     "flash-list": "^0.0.1-security",
     "jotai": "^2.6.4",
+    "moti": "^0.28.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.73.2",
