@@ -12,7 +12,9 @@ export default function BookModal({
   thumbnail,
   pageCount,
 }: BookProps) {
-  const addBook = useAddBook()
+  const { addBook } = useAddBook()
+  const handleAddBook = (item: BookData) => addBook(item)
+
   const sx = useSx()
 
   const container = sx({
@@ -30,6 +32,7 @@ export default function BookModal({
     alignItems: 'center',
     textAlign: 'center',
     justifyContent: 'center',
+    rowGap: 10,
   })
 
   const descriptionTextStyle = sx({
@@ -68,7 +71,7 @@ export default function BookModal({
           full
           borderRadius={24}
           title="Add to library"
-          onPress={() => addBook}
+          onPress={() => handleAddBook}
         />
       </View>
     </View>

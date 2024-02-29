@@ -40,9 +40,7 @@ export default function BookSearch() {
 
   const { addBook } = useAddBook()
 
-  const handleAddBook = (item: BookData) => {
-    addBook(item)
-  }
+  const handleAddBook = (item: BookData) => addBook(item)
 
   const uri = 'https://www.googleapis.com/books/v1/volumes?q='
 
@@ -89,7 +87,6 @@ export default function BookSearch() {
           buttonLabel={'+'}
           description={description}
           buttonOnPress={() => handleAddBook(item)}
-          onPress={() => {}}
         />
       </View>
     )

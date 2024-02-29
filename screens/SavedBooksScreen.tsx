@@ -24,7 +24,6 @@ export default function SavedBooksScreen() {
     const subscription = getBooksObservable()
       .pipe(
         switchMap((books) =>
-          // Convert the operation to a Promise that resolves to the enriched books data
           Promise.all(
             books.map(async (book) => {
               const authorsQuery = database.collections
@@ -50,7 +49,6 @@ export default function SavedBooksScreen() {
         error: (err) => console.error('Error fetching books:', err),
       })
 
-    // Cleanup
     return () => subscription.unsubscribe()
   }, [])
 
