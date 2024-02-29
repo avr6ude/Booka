@@ -1,38 +1,17 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome'
-import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider,
-} from '@react-navigation/native'
 import { useFonts } from 'expo-font'
 import { Tabs } from 'expo-router'
 import * as SplashScreen from 'expo-splash-screen'
 import { useEffect } from 'react'
 import { useColorScheme } from '@/helpers/useColorScheme'
 import Colors from '@/constants/Colors'
-import SQLiteAdapter from '@nozbe/watermelondb/adapters/sqlite'
 import { AntDesign } from '@expo/vector-icons'
-import booka from '@/models/schema'
-import { Database } from '@nozbe/watermelondb'
-import Author from '@/models/Author'
-import Book from '@/models/Book'
-import IndustryIdentifier from '@/models/IndustryIdentifier'
 import AppProvider from '@/components/AppProvider'
 export { ErrorBoundary } from 'expo-router'
 
 export const unstable_settings = {
   initialRouteName: '/',
 }
-
-export const adapter = new SQLiteAdapter({
-  dbName: 'booka',
-  schema: booka,
-})
-
-export const database = new Database({
-  adapter,
-  modelClasses: [Book, Author, IndustryIdentifier],
-})
 
 SplashScreen.preventAutoHideAsync()
 
