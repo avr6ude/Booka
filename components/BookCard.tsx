@@ -45,7 +45,7 @@ export default function BookCard({
 
   const contentStyles = sx({
     height: 'auto',
-    width: '50%',
+    width: '65%',
     flexDirection: 'row',
   })
 
@@ -101,7 +101,7 @@ export default function BookCard({
     return <Animated.View pointerEvents="none" style={containerStyle} />
   }
 
-  const truncatedTitle = truncateEnd(title, 35)
+  const truncatedTitle = truncateEnd(title, 50)
   const truncatedAuthors =
     authors && authors.length > 0 && truncateEnd(authors.join(', '), 35)
 

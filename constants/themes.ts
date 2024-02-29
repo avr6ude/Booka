@@ -24,8 +24,9 @@ const lightColors = {
 
 const textSizes = {
   small: 12,
+  bookPages: 14,
   body: 16,
-  bookTitle: 20,
+  bookTitle: 18,
   title: 24,
   header: 32,
 }
@@ -56,6 +57,10 @@ const text = {
   bookTitle: {
     fontSize: textSizes.bookTitle,
     fontWeight: 'bold',
+    color: '$text',
+  },
+  pages: {
+    fontSize: textSizes.bookPages,
     color: '$text',
   },
 }

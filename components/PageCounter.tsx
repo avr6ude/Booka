@@ -16,7 +16,7 @@ export default function PageCounter({ count }: { count: number }) {
     count > 0 && (
       <View sx={pagesStyle}>
         <Ionicons name="layers-outline" size={16} style={iconStyle} />
-        <Text variant="small">{count} pages</Text>
+        <Text variant="pages">{count} pages</Text>
       </View>
     )
   )
