@@ -1,3 +1,4 @@
+import { BookData } from '@/types/books'
 import { Model } from '@nozbe/watermelondb'
 import { Associations } from '@nozbe/watermelondb/Model'
 import { field, relation } from '@nozbe/watermelondb/decorators'
@@ -12,7 +13,7 @@ class IndustryIdentifier extends Model {
   @field('identifier') identifier!: string
   @field('book_id') book_id!: string
 
-  @relation('books', 'book_id') book!: BookData // Specify the correct type if available
+  @relation('books', 'book_id') book!: BookData
 }
 
 export default IndustryIdentifier

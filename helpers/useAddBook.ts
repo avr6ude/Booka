@@ -1,5 +1,7 @@
 import Author from '@/models/Author'
 import Book from '@/models/Book'
+import IndustryIdentifier from '@/models/IndustryIdentifier'
+import { BookData, IndustryIdentifierData } from '@/types/books'
 import { useDatabase } from '@nozbe/watermelondb/hooks'
 import { useEffect } from 'react'
 import { Subject } from 'rxjs'
@@ -18,6 +20,9 @@ export default function useAddBookObservable() {
       next: async (bookData: BookData) => {
         await database.write(async () => {
           const booksCollection = database.collections.get<Book>('books')
+          const authorsCollection = database.collections.get<Author>('authors')
+          const industryIdentifiersCollection =
+            database.collections.get<IndustryIdentifier>('industry_identifiers')
           const book = await booksCollection.create((book) => {
             book.title = bookData.volumeInfo.title
             book.description = bookData.volumeInfo.description
@@ -26,13 +31,26 @@ export default function useAddBookObservable() {
             book.thumbnail = bookData.volumeInfo.imageLinks?.thumbnail
           })
 
-          const authorsCollection = database.collections.get<Author>('authors')
-          bookData.volumeInfo.authors?.forEach(async (authorName) => {
+          bookData.volumeInfo.authors?.forEach(async (authorName: string) => {
             await authorsCollection.create((author) => {
               author.book_id = book.id
               author.name = authorName
             })
           })
+
+          const identifierData = bookData.volumeInfo.industryIdentifiers
+
+          if (identifierData && Array.isArray(identifierData)) {
+            for (const idData of identifierData) {
+              await industryIdentifiersCollection.create(
+                (industryIdentifier) => {
+                  industryIdentifier.book_id = book.id
+                  industryIdentifier.type = idData.type
+                  industryIdentifier.identifier = idData.identifier
+                }
+              )
+            }
+          }
         })
       },
     })

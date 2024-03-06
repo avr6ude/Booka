@@ -6,6 +6,7 @@ import BookCard from './BookCard'
 import Button from './Button'
 import { useAtom } from 'jotai'
 import useRemoveBook from '@/helpers/useRemoveBook'
+import { BookData } from '@/types/books'
 export default function BookSearch() {
   const sx = useSx()
 
@@ -104,7 +105,7 @@ export default function BookSearch() {
         thumbnail={img}
         description={description}
         buttonOnPress={() => handleAddBook()}
-        buttonTitle={isAdded ? '✓' : '+'}
+        buttonTitle={isAdded ? '✔︎' : '+'}
       />
     )
   }

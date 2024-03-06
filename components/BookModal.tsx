@@ -4,6 +4,7 @@ import Button from './Button'
 import { BookProps } from './BookCard'
 import ThumbnailImage from './ThumbnailImage'
 import PageCounter from './PageCounter'
+import { BookData } from '@/types/books'
 
 export default function BookModal({
   title,
