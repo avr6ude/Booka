@@ -1,12 +1,13 @@
 import { FlashList } from '@shopify/flash-list'
-import { useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { View, TextInput, useSx } from 'dripsy'
 import useAddBook from '../helpers/useAddBook'
 import BookCard from './BookCard'
 import Button from './Button'
-import { useAtom } from 'jotai'
 import useRemoveBook from '@/helpers/useRemoveBook'
 import { BookData } from '@/types/books'
+import { useDatabase } from '@nozbe/watermelondb/hooks'
+import { isBookInDbObservable } from '@/helpers/isBookInDb'
 export default function BookSearch() {
   const sx = useSx()
 
@@ -74,21 +75,32 @@ export default function BookSearch() {
   }
 
   const BookItem = ({ item }: { item: BookData }) => {
-    const lastBookId = useRef(item.id)
-    const [isAdded, setAdded] = useState<boolean>(false)
+    const database = useDatabase()
+    const [isAdded, setAdded] = useState<any>(false) // try to type this correctly later
 
-    if (item.id !== lastBookId.current) {
-      lastBookId.current = item.id
-      setAdded(false)
-    }
+    useEffect(() => {
+      const identifierData = item.volumeInfo.industryIdentifiers
+      const subscription = isBookInDbObservable(
+        database,
+        identifierData
+      ).subscribe({
+        next: (added) => setAdded(added),
+        error: (error) => {
+          console.error('Failed to check if book is in db', error)
+        },
+      })
 
-    const handleAddBook = () => {
+      return () => subscription.unsubscribe()
+    }, [item])
+
+    const handleAddBook = async () => {
       if (isAdded) {
-        removeBook(item.id)
+        await removeBook(item.id)
+        setAdded(false)
       } else {
         addBook(item)
+        setAdded(true)
       }
-      setAdded(!isAdded)
     }
 
     const title = item.volumeInfo.title
