@@ -46,7 +46,15 @@ export default function useAddBookObservable() {
                 (industryIdentifier) => {
                   industryIdentifier.book_id = book.id
                   industryIdentifier.type = idData.type
-                  industryIdentifier.identifier = idData.identifier
+                  if (industryIdentifier.type === 'OTHER') {
+                    const match = idData.identifier.match(/(\D+?):(\d+)/)
+                    if (match) {
+                      industryIdentifier.type = match[1].trim()
+                      industryIdentifier.identifier = match[2]
+                    }
+                  } else {
+                    industryIdentifier.identifier = idData.identifier
+                  }
                 }
               )
             }
