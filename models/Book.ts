@@ -20,8 +20,7 @@ class Book extends Model {
   @children('authors') authors!: Author[]
   @children('industry_identifiers') industryIdentifiers!: IndustryIdentifier[]
 
-  @lazy
-  fullTitle = this.title.concat(' - ', this.description)
+  @lazy fullTitle = this.title.concat(' - ', this.description)
 }
 
 export default Book

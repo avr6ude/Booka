@@ -7,7 +7,7 @@ export interface VolumeInfo {
   title: string
   authors: string[]
   description: string
-  industryIdentifiers: IndustryIdentifierData
+  industryIdentifiers: IndustryIdentifierData[]
   pageCount: number
   imageLinks: ImageLinksData
 }
