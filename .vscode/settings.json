@@ -10,11 +10,5 @@
     "javascriptreact",
     "typescript",
     "typescriptreact"
-  ],
-  "[xml]": {
-    "editor.defaultFormatter": "DotJoshJohnson.xml"
-  },
-  "[shellscript]": {
-    "editor.defaultFormatter": "foxundermoon.shell-format"
-  }
+  ]
 }
