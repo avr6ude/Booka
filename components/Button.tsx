@@ -30,13 +30,14 @@ export default function Button({
   title,
   full,
   onPress,
-  color, // default color
+  color,
   round = false,
   iconName,
   borderRadius = 5,
   iconColor = 'white',
   iconSize = 24,
   type = buttonType.primary,
+  ...rest
 }: ButtonProps) {
   const sx = useSx()
   const { theme } = useDripsyTheme()
@@ -80,7 +81,7 @@ export default function Button({
   })
 
   return (
-    <AnimatedPressable onPress={onPress} style={buttonStyles}>
+    <AnimatedPressable onPress={onPress} style={buttonStyles} {...rest}>
       {iconName && (
         <Ionicons
           name={iconName}

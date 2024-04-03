@@ -15,6 +15,7 @@ import truncateEnd from '../helpers/truncateEnd'
 import AnimatedPressable from './AnimatedPressable'
 import { children } from '@nozbe/watermelondb/decorators'
 import ChildrenProp from '@/models/ChildrenProp'
+import { Ionicons } from '@expo/vector-icons'
 
 export interface BookProps {
   title: string
@@ -24,6 +25,7 @@ export interface BookProps {
   pageCount: number
   onPress?: () => void
   buttonTitle?: string
+  buttonIcon?: React.ComponentProps<typeof Ionicons>['name']
   buttonOnPress?: () => void
 }
 
@@ -34,6 +36,7 @@ export default function BookCard({
   pageCount,
   description,
   buttonTitle,
+  buttonIcon,
   buttonOnPress = () => {},
 }: BookProps) {
   const sx = useSx()
@@ -137,6 +140,7 @@ export default function BookCard({
           round
           title={buttonTitle}
           onPress={buttonOnPress}
+          iconName={buttonIcon}
         />
       </View>
       <BottomSheetModal

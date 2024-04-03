@@ -117,7 +117,7 @@ export default function BookSearch() {
         thumbnail={img}
         description={description}
         buttonOnPress={() => handleAddBook()}
-        buttonTitle={isAdded ? '✔︎' : '+'}
+        buttonIcon={isAdded ? 'checkmark' : 'add'}
       />
     )
   }
