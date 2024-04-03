@@ -1,3 +1,4 @@
+import { BookData } from '@/types/books'
 import { Model } from '@nozbe/watermelondb'
 import { Associations } from '@nozbe/watermelondb/Model'
 import { field, relation } from '@nozbe/watermelondb/decorators'

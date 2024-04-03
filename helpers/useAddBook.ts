@@ -1,7 +1,7 @@
 import Author from '@/models/Author'
 import Book from '@/models/Book'
 import IndustryIdentifier from '@/models/IndustryIdentifier'
-import { BookData, IndustryIdentifierData } from '@/types/books'
+import { BookData } from '@/types/books'
 import { useDatabase } from '@nozbe/watermelondb/hooks'
 import { useEffect } from 'react'
 import { Subject } from 'rxjs'

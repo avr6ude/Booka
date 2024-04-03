@@ -1,5 +1,5 @@
 import { IndustryIdentifierData } from '@/types/books'
-import { Q, Database } from '@nozbe/watermelondb'
+import { Database, Q } from '@nozbe/watermelondb'
 import { Observable } from 'rxjs'
 
 export const isBookInDbObservable = (

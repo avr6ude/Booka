@@ -1,21 +1,19 @@
+import Author from '@/models/Author'
+import { Ionicons } from '@expo/vector-icons'
 import {
   BottomSheetBackgroundProps,
   BottomSheetModal,
   BottomSheetView,
 } from '@gorhom/bottom-sheet'
-import { ReactNode, useCallback, useEffect, useMemo, useRef } from 'react'
 import { Text, View, useSx } from 'dripsy'
-import BookModal from './BookModal'
-import Button from './Button'
-import ThumbnailImage from './ThumbnailImage'
+import { useCallback, useMemo, useRef } from 'react'
 import Animated from 'react-native-reanimated'
-import Author from '@/models/Author'
-import PageCounter from './PageCounter'
 import truncateEnd from '../helpers/truncateEnd'
 import AnimatedPressable from './AnimatedPressable'
-import { children } from '@nozbe/watermelondb/decorators'
-import ChildrenProp from '@/models/ChildrenProp'
-import { Ionicons } from '@expo/vector-icons'
+import BookModal from './BookModal'
+import Button from './Button'
+import PageCounter from './PageCounter'
+import ThumbnailImage from './ThumbnailImage'
 
 export interface BookProps {
   title: string

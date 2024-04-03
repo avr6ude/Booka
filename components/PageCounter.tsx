@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons'
-import { View, Text, useSx } from 'dripsy'
+import { Text, View, useSx } from 'dripsy'
 
 export default function PageCounter({ count }: { count: number }) {
   const sx = useSx()

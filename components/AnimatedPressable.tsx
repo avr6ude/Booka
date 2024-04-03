@@ -1,10 +1,10 @@
+import { Pressable, useSx } from 'dripsy'
 import React from 'react'
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated'
-import { Pressable, useSx } from 'dripsy'
 
 const CustomPressable = ({
   children,

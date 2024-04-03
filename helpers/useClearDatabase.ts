@@ -1,5 +1,5 @@
-import { useCallback } from 'react'
 import { useDatabase } from '@nozbe/watermelondb/hooks'
+import { useCallback } from 'react'
 
 export default function useClearDatabase() {
   const database = useDatabase()

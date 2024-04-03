@@ -1,8 +1,8 @@
 import { Model } from '@nozbe/watermelondb'
-import { field, children, lazy } from '@nozbe/watermelondb/decorators'
-import IndustryIdentifier from './IndustryIdentifier'
 import { Associations } from '@nozbe/watermelondb/Model'
+import { children, field, lazy } from '@nozbe/watermelondb/decorators'
 import Author from './Author'
+import IndustryIdentifier from './IndustryIdentifier'
 
 class Book extends Model {
   static table = 'books'

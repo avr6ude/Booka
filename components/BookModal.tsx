@@ -1,10 +1,10 @@
-import { ScrollView, View, Text, useSx } from 'dripsy'
 import useAddBook from '@/helpers/useAddBook'
-import Button from './Button'
-import { BookProps } from './BookCard'
-import ThumbnailImage from './ThumbnailImage'
-import PageCounter from './PageCounter'
 import { BookData } from '@/types/books'
+import { ScrollView, Text, View, useSx } from 'dripsy'
+import { BookProps } from './BookCard'
+import Button from './Button'
+import PageCounter from './PageCounter'
+import ThumbnailImage from './ThumbnailImage'
 
 export default function BookModal({
   title,

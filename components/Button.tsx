@@ -1,6 +1,5 @@
-import { Pressable, Text, useDripsyTheme, useSx } from 'dripsy'
 import { Ionicons } from '@expo/vector-icons'
-import { IconProps } from '@expo/vector-icons/build/createIconSet'
+import { Text, useDripsyTheme, useSx } from 'dripsy'
 import AnimatedPressable from './AnimatedPressable'
 
 interface ButtonProps {

@@ -1,5 +1,4 @@
 import { Image, SxProp, useSx } from 'dripsy'
-import { ImageSourcePropType, StyleProp } from 'react-native'
 
 export default function ThumbnailImage({
   src,

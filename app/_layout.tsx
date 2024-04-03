@@ -1,12 +1,12 @@
+import AppProvider from '@/components/AppProvider'
+import Colors from '@/constants/Colors'
+import { useColorScheme } from '@/helpers/useColorScheme'
+import { AntDesign } from '@expo/vector-icons'
 import FontAwesome from '@expo/vector-icons/FontAwesome'
 import { useFonts } from 'expo-font'
 import { Tabs } from 'expo-router'
 import * as SplashScreen from 'expo-splash-screen'
 import { useEffect } from 'react'
-import { useColorScheme } from '@/helpers/useColorScheme'
-import Colors from '@/constants/Colors'
-import { AntDesign } from '@expo/vector-icons'
-import AppProvider from '@/components/AppProvider'
 export { ErrorBoundary } from 'expo-router'
 
 export const unstable_settings = {

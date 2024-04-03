@@ -1,7 +1,7 @@
-import { SafeAreaView } from 'react-native'
-import CommonHeader from '@/components/CommonHeader'
 import Button from '@/components/Button'
+import CommonHeader from '@/components/CommonHeader'
 import useClearDatabase from '@/helpers/useClearDatabase'
+import { SafeAreaView } from 'react-native'
 
 export default function Settings() {
   const clearDatabase = useClearDatabase()
