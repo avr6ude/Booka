@@ -1,5 +1,5 @@
-import AddScreen from '@/screens/AddScreen'
+import AddBook from '@/screens/AddBook'
 
-export default function TabOneScreen() {
-  return <AddScreen />
+export default function AddBookScreen() {
+  return <AddBook />
 }

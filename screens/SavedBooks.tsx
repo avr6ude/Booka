@@ -83,7 +83,7 @@ export default function SavedBooksScreen() {
             thumbnail={img}
             description={description}
             authors={authors}
-            buttonTitle="-"
+            buttonIcon="trash-outline"
             buttonOnPress={() => handleRemoveBook(item.id)}
           />
         </MotiView>

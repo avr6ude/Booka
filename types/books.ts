@@ -2,7 +2,6 @@ export interface BookData {
   id: string
   volumeInfo: VolumeInfo
 }
-
 export interface VolumeInfo {
   title: string
   authors: string[]
