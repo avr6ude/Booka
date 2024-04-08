@@ -1,3 +1,4 @@
+import { theme } from '@/constants/themes'
 import Author from '@/models/Author'
 import { Ionicons } from '@expo/vector-icons'
 import {
@@ -93,7 +94,7 @@ export default function BookCard({
     />
   )
 
-  const snapPoints = useMemo(() => ['25%', '90%'], [])
+  const snapPoints = useMemo(() => ['95%'], [])
 
   function CustomBackground({ style }: BottomSheetBackgroundProps) {
     const containerAnimatedStyle = sx({ backgroundColor: '$background' })
@@ -143,12 +144,12 @@ export default function BookCard({
       </View>
       <BottomSheetModal
         ref={bottomSheetModalRef}
-        index={1}
+        index={0}
         snapPoints={snapPoints}
         style={shadowStyle}
         backgroundComponent={CustomBackground}
         handleIndicatorStyle={{
-          backgroundColor: 'white',
+          backgroundColor: theme.colors.$text,
         }}
       >
         <BottomSheetView
