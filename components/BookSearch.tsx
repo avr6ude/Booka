@@ -1,13 +1,14 @@
-import { isBookInDbObservable } from '@/helpers/isBookInDb'
+import { useBookSearch } from '@/api/api'
 import useRemoveBook from '@/helpers/useRemoveBook'
 import { BookData } from '@/types/books'
 import { useDatabase } from '@nozbe/watermelondb/hooks'
 import { FlashList } from '@shopify/flash-list'
 import { TextInput, View, useSx } from 'dripsy'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import useAddBook from '../helpers/useAddBook'
 import BookCard from './BookCard'
 import Button from './Button'
+import CardLoader from './CardLoader'
 export default function BookSearch() {
   const sx = useSx()
 
@@ -40,26 +41,18 @@ export default function BookSearch() {
   })
 
   const [query, setQuery] = useState<string>('')
-  const [books, setBooks] = useState<BookData[]>([])
+  const { data, isError, isLoading, refetch } = useBookSearch(query)
+
+  const handleSearch = async () => {
+    if (query.length > 0) {
+      refetch()
+    }
+  }
 
   const { addBook } = useAddBook()
   const removeBook = useRemoveBook()
 
-  const uri = 'https://www.googleapis.com/books/v1/volumes?q='
-
-  const handleSearch = async () => {
-    if (query.length > 0) {
-      try {
-        const res = await fetch(uri + encodeURIComponent(query))
-        const json = await res.json()
-        setBooks(json.items || [])
-      } catch (e) {
-        console.error(e)
-      }
-    }
-  }
-
-  function SearchBar() {
+  const SearchBar = () => {
     return (
       <View sx={container}>
         <TextInput
@@ -67,31 +60,29 @@ export default function BookSearch() {
           placeholder="Search"
           value={query}
           onChangeText={setQuery}
-          onSubmitEditing={handleSearch}
         />
         <Button round onPress={handleSearch} iconName="search" iconSize={20} />
       </View>
     )
   }
-
   const BookItem = ({ item }: { item: BookData }) => {
     const database = useDatabase()
-    const [isAdded, setAdded] = useState<any>(false) // try to type this correctly later
+    const [isAdded, setAdded] = useState<boolean>(false)
 
-    useEffect(() => {
-      const identifierData = item.volumeInfo.industryIdentifiers
-      const subscription = isBookInDbObservable(
-        database,
-        identifierData
-      ).subscribe({
-        next: (added) => setAdded(added),
-        error: (error) => {
-          console.error('Failed to check if book is in db', error)
-        },
-      })
+    // useEffect(() => {
+    //   const identifierData = item.isbn
+    //   const subscription = isBookInDbObservable(
+    //     database,
+    //     identifierData
+    //   ).subscribe({
+    //     next: (added) => setAdded(added),
+    //     error: (error) => {
+    //       console.error('Failed to check if book is in db', error)
+    //     },
+    //   })
 
-      return () => subscription.unsubscribe()
-    }, [item])
+    //   return () => subscription.unsubscribe()
+    // }, [item])
 
     const handleAddBook = async () => {
       if (isAdded) {
@@ -103,19 +94,19 @@ export default function BookSearch() {
       }
     }
 
-    const title = item.volumeInfo.title
-    const authors = item.volumeInfo.authors
-    const img = item.volumeInfo.imageLinks?.thumbnail
-    const pages = item.volumeInfo.pageCount
-    const description = item.volumeInfo.description
+    const title = item.title
+    const authors = item.authors
+    const img = item.cover
+    const pages = item.pages
+    const description = item.description
 
     return (
       <BookCard
         title={title}
         authors={authors}
-        pageCount={pages}
         thumbnail={img}
         description={description}
+        pageCount={pages}
         buttonOnPress={() => handleAddBook()}
         buttonIcon={isAdded ? 'checkmark' : 'add'}
       />
@@ -127,8 +118,10 @@ export default function BookSearch() {
       {SearchBar()}
       <View style={{ height: '100%', flex: 1 }}>
         <FlashList
-          data={books}
-          renderItem={({ item }) => <BookItem item={item} />}
+          data={data}
+          renderItem={({ item }) =>
+            isLoading ? <CardLoader /> : <BookItem item={item} />
+          }
           keyExtractor={(item) => item.id}
           estimatedItemSize={200}
         />

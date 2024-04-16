@@ -14,8 +14,7 @@ class Book extends Model {
   @field('title') title!: string
   @field('description') description!: string
   @field('page_count') pageCount!: number
-  @field('small_thumbnail') smallThumbnail!: string
-  @field('thumbnail') thumbnail!: string
+  @field('cover') cover!: string
 
   @children('authors') authors!: Author[]
   @children('industry_identifiers') industryIdentifiers!: IndustryIdentifier[]

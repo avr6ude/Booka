@@ -1,20 +1,13 @@
 export interface BookData {
+  description: string
   id: string
-  volumeInfo: VolumeInfo
-}
-export interface VolumeInfo {
+  isbn: string
   title: string
   authors: string[]
-  description: string
-  industryIdentifiers: IndustryIdentifierData[]
-  pageCount: number
-  imageLinks: ImageLinksData
-}
-export interface IndustryIdentifierData {
-  type: string
-  identifier: string
-}
-export interface ImageLinksData {
-  smallThumbnail: string
-  thumbnail: string
+  pages: number
+  language: string
+  cover: string
+  publisher: string
+  year: string
+  rating: number
 }

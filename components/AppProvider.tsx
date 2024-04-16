@@ -12,6 +12,7 @@ import {
   DefaultTheme,
   ThemeProvider,
 } from '@react-navigation/native'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { DripsyProvider } from 'dripsy'
 import { useEffect } from 'react'
 import { useColorScheme } from 'react-native'
@@ -34,6 +35,8 @@ export default function AppProvider({ children }: any) {
     modelClasses: [Book, Author, IndustryIdentifier],
   })
 
+  const queryClient = new QueryClient()
+
   useEffect(() => {
     changeBarColors(true, '#50000000', 'transparent')
   }, [])
@@ -44,7 +47,9 @@ export default function AppProvider({ children }: any) {
         <GestureHandlerRootView style={{ flex: 1 }}>
           <BottomSheetModalProvider>
             <ThemeProvider value={navigationThemeSelector}>
-              {children}
+              <QueryClientProvider client={queryClient}>
+                {children}
+              </QueryClientProvider>
             </ThemeProvider>
           </BottomSheetModalProvider>
         </GestureHandlerRootView>

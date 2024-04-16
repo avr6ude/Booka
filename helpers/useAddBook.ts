@@ -24,41 +24,40 @@ export default function useAddBookObservable() {
           const industryIdentifiersCollection =
             database.collections.get<IndustryIdentifier>('industry_identifiers')
           const book = await booksCollection.create((book) => {
-            book.title = bookData.volumeInfo.title
-            book.description = bookData.volumeInfo.description
-            book.pageCount = bookData.volumeInfo.pageCount
-            book.smallThumbnail = bookData.volumeInfo.imageLinks?.smallThumbnail
-            book.thumbnail = bookData.volumeInfo.imageLinks?.thumbnail
+            book.title = bookData.title
+            book.description = bookData.description
+            book.pageCount = bookData.pages
+            book.cover = bookData.cover
           })
 
-          bookData.volumeInfo.authors?.forEach(async (authorName: string) => {
+          bookData.authors?.forEach(async (authorName: string) => {
             await authorsCollection.create((author) => {
               author.book_id = book.id
               author.name = authorName
             })
           })
 
-          const identifierData = bookData.volumeInfo.industryIdentifiers
+          //const identifierData = bookData.volumeInfo.industryIdentifiers
 
-          if (identifierData && Array.isArray(identifierData)) {
-            for (const idData of identifierData) {
-              await industryIdentifiersCollection.create(
-                (industryIdentifier) => {
-                  industryIdentifier.book_id = book.id
-                  industryIdentifier.type = idData.type
-                  if (industryIdentifier.type === 'OTHER') {
-                    const match = idData.identifier.match(/(\D+?):(\d+)/)
-                    if (match) {
-                      industryIdentifier.type = match[1].trim()
-                      industryIdentifier.identifier = match[2]
-                    }
-                  } else {
-                    industryIdentifier.identifier = idData.identifier
-                  }
-                }
-              )
-            }
-          }
+          // if (identifierData && Array.isArray(identifierData)) {
+          //   for (const idData of identifierData) {
+          //     await industryIdentifiersCollection.create(
+          //       (industryIdentifier) => {
+          //         industryIdentifier.book_id = book.id
+          //         industryIdentifier.type = idData.type
+          //         if (industryIdentifier.type === 'OTHER') {
+          //           const match = idData.identifier.match(/(\D+?):(\d+)/)
+          //           if (match) {
+          //             industryIdentifier.type = match[1].trim()
+          //             industryIdentifier.identifier = match[2]
+          //           }
+          //         } else {
+          //           industryIdentifier.identifier = idData.identifier
+          //         }
+          //       }
+          //     )
+          //   }
+          // }
         })
       },
     })
