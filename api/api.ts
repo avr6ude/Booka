@@ -2,7 +2,7 @@ import { BookData } from '@/types/books'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 
-const apiUrl = 'https://335a-5-189-43-226.ngrok-free.app/book'
+const apiUrl = 'http://127.0.0.1:8000/book'
 const fetcher = async (query: string) => {
   if (!query) return []
   try {

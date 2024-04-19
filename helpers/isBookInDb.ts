@@ -1,22 +1,18 @@
-import { IndustryIdentifierData } from '@/types/books'
 import { Database, Q } from '@nozbe/watermelondb'
 import { Observable } from 'rxjs'
 
-export const isBookInDbObservable = (
-  database: Database,
-  data: IndustryIdentifierData[]
-) => {
+export const isBookInDbObservable = (database: Database, data: any) => {
   return new Observable((subscriber) => {
     const checkBook = async () => {
-      for (const identifierData of data) {
-        const { type, identifier } = identifierData
+      for (const bookId of data) {
+        const idToCheck = typeof bookId === 'string' ? bookId : bookId.id
 
-        const identifiers = await database.collections
-          .get('industry_identifiers')
-          .query(Q.where('type', type), Q.where('identifier', identifier))
+        const books = await database.collections
+          .get('books')
+          .query(Q.where('id', idToCheck))
           .fetch()
 
-        if (identifiers.length > 0) {
+        if (books.length > 0) {
           subscriber.next(true)
           subscriber.complete()
           return

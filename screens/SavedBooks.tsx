@@ -40,11 +40,12 @@ export default function SavedBooksScreen() {
                 .get<Author>('authors')
                 .query(Q.where('book_id', book.id))
               const authors = await authorsQuery.fetch()
+
               return {
                 id: book.id,
                 title: book.title,
                 authors: authors.map((author) => author.name),
-                thumbnail: book.thumbnail,
+                cover: book.cover,
                 pageCount: book.pageCount,
                 description: book.description,
               }
@@ -65,7 +66,7 @@ export default function SavedBooksScreen() {
   const renderItem = ({ item }: { item: Book }) => {
     const title = item.title
     const authors = item.authors
-    const img = item.thumbnail
+    const img = item.cover
     const pages = item.pageCount
     const description = item.description
 

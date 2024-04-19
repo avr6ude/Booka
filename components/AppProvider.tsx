@@ -1,7 +1,6 @@
 import { theme, themeLight } from '@/constants/themes'
 import Author from '@/models/Author'
 import Book from '@/models/Book'
-import IndustryIdentifier from '@/models/IndustryIdentifier'
 import booka from '@/models/schema'
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import { Database } from '@nozbe/watermelondb'
@@ -32,7 +31,7 @@ export default function AppProvider({ children }: any) {
 
   const database = new Database({
     adapter,
-    modelClasses: [Book, Author, IndustryIdentifier],
+    modelClasses: [Book, Author],
   })
 
   const queryClient = new QueryClient()
