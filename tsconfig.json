@@ -7,7 +7,7 @@
       "@/*": ["./*"]
     },
     "target": "ESNext",
-    "module": "ESNext",
+    "module": "nodenext",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   },
