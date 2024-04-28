@@ -5,16 +5,15 @@ export const isBookInDbObservable = (database: Database, data: any) => {
   return new Observable((subscriber) => {
     const checkBook = async () => {
       for (const bookId of data) {
-        const idToCheck = typeof bookId === 'string' ? bookId : bookId.id
-
         const books = await database.collections
           .get('books')
-          .query(Q.where('id', idToCheck))
+          .query(Q.where('id', bookId))
           .fetch()
 
         if (books.length > 0) {
           subscriber.next(true)
           subscriber.complete()
+
           return
         }
       }

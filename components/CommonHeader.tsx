@@ -2,6 +2,7 @@ import { Text, View, useSx } from 'dripsy'
 
 export default function CommonHeader({ text }: { text: string }) {
   const sx = useSx()
+
   const containerStyles = sx({
     bg: '$background',
     flexDirection: 'row',

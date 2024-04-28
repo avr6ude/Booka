@@ -22,5 +22,5 @@ export default function useRemoveBook() {
       .catch((error) => console.error(error))
   }
 
-  return removeBook
+  return { removeBook }
 }

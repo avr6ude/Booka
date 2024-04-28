@@ -41,7 +41,7 @@ export default function BookSearch() {
     marginRight: 10,
   })
 
-  const [query, setQuery] = useState<string>('a')
+  const [query, setQuery] = useState<string>('')
   const { data, isError, isLoading, refetch } = useBookSearch(query)
 
   const handleSearch = async () => {
@@ -51,7 +51,7 @@ export default function BookSearch() {
   }
 
   const { addBook } = useAddBook()
-  const removeBook = useRemoveBook()
+  const { removeBook } = useRemoveBook()
 
   const SearchBar = () => {
     return (
@@ -111,20 +111,18 @@ export default function BookSearch() {
       />
     )
   }
-  //fix L116 to use as a component <SearchBar />}
+
   return (
-    <>
+    <View style={{ height: '100%', flex: 1 }}>
       <SearchBar />
-      <View style={{ height: '100%', flex: 1 }}>
-        <FlashList
-          data={data}
-          renderItem={({ item }) =>
-            isLoading ? <CardLoader /> : <BookItem item={item} />
-          }
-          keyExtractor={(item) => item.id}
-          estimatedItemSize={200}
-        />
-      </View>
-    </>
+      <FlashList
+        data={data}
+        renderItem={({ item }) =>
+          isLoading ? <CardLoader /> : <BookItem item={item} />
+        }
+        keyExtractor={(item) => item.id}
+        estimatedItemSize={200}
+      />
+    </View>
   )
 }

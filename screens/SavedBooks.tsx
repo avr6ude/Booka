@@ -15,7 +15,7 @@ import useRemoveBook from '../helpers/useRemoveBook'
 export default function SavedBooksScreen() {
   const database = useDatabase()
   const [books, setBooks] = useState<any>([]) // fix type
-  const removeBook = useRemoveBook()
+  const { removeBook } = useRemoveBook()
   const list = createRef<FlashList<Book>>()
 
   function getBooksObservable() {
