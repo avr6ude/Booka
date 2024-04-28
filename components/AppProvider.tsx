@@ -1,4 +1,9 @@
-import { theme, themeLight } from '@/constants/themes'
+import {
+  navigationThemeDark,
+  navigationThemeLight,
+  theme,
+  themeLight,
+} from '@/constants/themes'
 import Author from '@/models/Author'
 import Book from '@/models/Book'
 import booka from '@/models/schema'
@@ -6,11 +11,7 @@ import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import { Database } from '@nozbe/watermelondb'
 import { DatabaseProvider } from '@nozbe/watermelondb/DatabaseProvider'
 import SQLiteAdapter from '@nozbe/watermelondb/adapters/sqlite'
-import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider,
-} from '@react-navigation/native'
+import { ThemeProvider } from '@react-navigation/native'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { DripsyProvider } from 'dripsy'
 import { useEffect } from 'react'
@@ -22,7 +23,7 @@ export default function AppProvider({ children }: any) {
   const colorMode = useColorScheme()
   const themeSelector = colorMode === 'dark' ? theme : themeLight
   const navigationThemeSelector =
-    colorMode === 'dark' ? DarkTheme : DefaultTheme
+    colorMode === 'dark' ? navigationThemeDark : navigationThemeLight
 
   const adapter = new SQLiteAdapter({
     dbName: 'booka',

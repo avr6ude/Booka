@@ -1,3 +1,4 @@
+import { DefaultTheme } from '@react-navigation/native'
 import { makeTheme } from 'dripsy'
 
 const tintColorLight = '#2f95dc'
@@ -13,6 +14,7 @@ const darkColors = {
   $tabIconSelected: tintColorDark,
   $button: buttonBg,
 }
+
 const lightColors = {
   $text: '#000',
   $background: '#fff',
@@ -88,6 +90,34 @@ const themeLight = {
   colors: lightColors,
 }
 
+const navigationThemeDark = {
+  ...DefaultTheme,
+  dark: true,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: darkColors.$text,
+    background: darkColors.$background,
+    card: darkColors.$background,
+    text: darkColors.$text,
+    border: darkColors.$background,
+    notification: tintColorDark,
+  },
+}
+
+const navigationThemeLight = {
+  ...DefaultTheme,
+  dark: false,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: lightColors.$text,
+    background: lightColors.$background,
+    card: lightColors.$background,
+    text: lightColors.$text,
+    border: lightColors.$background,
+    notification: tintColorLight,
+  },
+}
+
 type MyTheme = typeof theme
 
 declare module 'dripsy' {
@@ -95,4 +125,4 @@ declare module 'dripsy' {
   interface DripsyCustomTheme extends MyTheme {}
 }
 
-export { theme, themeLight }
+export { navigationThemeDark, navigationThemeLight, theme, themeLight }
