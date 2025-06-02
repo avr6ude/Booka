@@ -7,6 +7,7 @@ import { useFonts } from 'expo-font'
 import { Tabs } from 'expo-router'
 import * as SplashScreen from 'expo-splash-screen'
 import { ComponentProps, useEffect } from 'react'
+
 export { ErrorBoundary } from 'expo-router'
 
 export const unstable_settings = {

@@ -1,7 +1,7 @@
 import { db } from '@/db'
 import { type NewAuthor, type NewBook, authors, books } from '@/db/schema'
 import { BookData } from '@/types/books'
-import { eq } from 'drizzle-orm'
+import { eq, like } from 'drizzle-orm'
 
 export const initDatabase = async () => {
   // Drizzle will automatically create tables based on the schema
@@ -57,7 +57,17 @@ type BookRow = {
   authors: string
 }
 
-export const getBooks = async (): Promise<BookWithAuthors[]> => {
+export const getBooks = async (
+  searchQuery: string
+): Promise<BookWithAuthors[]> => {
+  if (!searchQuery) {
+    return []
+  }
+  const query = searchQuery.trim()
+
+  if (query.length === 0) {
+    return []
+  }
   const result = await db
     .select({
       id: books.id,
@@ -71,6 +81,7 @@ export const getBooks = async (): Promise<BookWithAuthors[]> => {
     })
     .from(books)
     .leftJoin(authors, eq(books.id, authors.bookId))
+    .where(like(books.title, `%${query}%`))
 
   const booksMap = new Map<string, BookWithAuthors>()
 

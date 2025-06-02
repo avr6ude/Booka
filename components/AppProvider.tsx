@@ -4,11 +4,13 @@ import {
   theme,
   themeLight,
 } from '@/constants/themes'
+import { expo } from '@/db'
 import { initDatabase } from '@/services/database'
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import { ThemeProvider } from '@react-navigation/native'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { DripsyProvider } from 'dripsy'
+import { useSQLiteDevTools } from 'expo-sqlite-devtools'
 import { ReactNode, useEffect } from 'react'
 import { useColorScheme } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
@@ -25,6 +27,7 @@ export default function AppProvider({
     colorMode === 'dark' ? navigationThemeDark : navigationThemeLight
 
   const queryClient = new QueryClient()
+  useSQLiteDevTools(expo)
 
   useEffect(() => {
     changeBarColors(true, '#50000000', 'transparent')

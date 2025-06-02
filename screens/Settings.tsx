@@ -1,5 +1,6 @@
 import Button from '@/components/Button'
 import CommonHeader from '@/components/CommonHeader'
+import { seed } from '@/components/seed'
 import useClearDatabase from '@/helpers/useClearDatabase'
 import { useColorScheme } from '@/helpers/useColorScheme'
 import { Text, View } from 'dripsy'
@@ -22,6 +23,7 @@ export default function Settings() {
           />
           <Text>Dark Mode</Text>
         </View>
+        <Button title="Seed Database" onPress={seed} />
       </View>
     </SafeAreaView>
   )

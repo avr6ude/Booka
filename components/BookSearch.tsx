@@ -14,7 +14,7 @@ export default function BookSearch() {
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ['books', searchQuery],
-    queryFn: () => getBooks(),
+    queryFn: () => getBooks(searchQuery),
     enabled: searchQuery.length > 0,
   })
 
@@ -62,6 +62,8 @@ export default function BookSearch() {
       <SearchBar onSearch={setSearchQuery} />
       {isError ? (
         <Text>Something went wrong. Please, try again later.</Text>
+      ) : !data ? (
+        <Text>No books found</Text>
       ) : (
         <FlashList
           data={data || []}
