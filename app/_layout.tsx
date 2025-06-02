@@ -51,7 +51,8 @@ export function RootLayoutNav() {
     <AppProvider>
       <Tabs
         screenOptions={{
-          tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+          tabBarActiveTintColor:
+            Colors[colorScheme.colorScheme ?? 'light'].tint,
           headerShown: false,
         }}
       >
@@ -59,14 +60,16 @@ export function RootLayoutNav() {
           name="index"
           options={{
             title: 'Favorites',
-            tabBarIcon: ({ color }) => <TabBarIcon name="book" color={color} />,
+            tabBarIcon: ({ color }: { color: string }) => (
+              <TabBarIcon name="book" color={color} />
+            ),
           }}
         />
         <Tabs.Screen
           name="add"
           options={{
             title: 'Add',
-            tabBarIcon: ({ color }) => (
+            tabBarIcon: ({ color }: { color: string }) => (
               <TabBarIcon name="pluscircle" color={color} />
             ),
           }}
@@ -75,7 +78,7 @@ export function RootLayoutNav() {
           name="settings"
           options={{
             title: 'Settings',
-            tabBarIcon: ({ color }) => (
+            tabBarIcon: ({ color }: { color: string }) => (
               <TabBarIcon name="setting" color={color} />
             ),
           }}

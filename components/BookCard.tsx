@@ -1,5 +1,5 @@
 import { theme } from '@/constants/themes'
-import Author from '@/models/Author'
+import { Author } from '@/db/schema'
 import { Ionicons } from '@expo/vector-icons'
 import {
   BottomSheetBackgroundProps,

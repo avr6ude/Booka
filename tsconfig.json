@@ -13,10 +13,10 @@
       "@/*": ["./*"]
     },
     "target": "esnext",
-    "module": "NodeNext",
+    "module": "ESNext",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "moduleResolution": "NodeNext",
+    "moduleResolution": "Bundler",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,

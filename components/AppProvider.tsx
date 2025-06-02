@@ -1,7 +1,12 @@
-import { theme, themeLight } from '@/constants/themes'
+import {
+  navigationThemeDark,
+  navigationThemeLight,
+  theme,
+  themeLight,
+} from '@/constants/themes'
 import { initDatabase } from '@/services/database'
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
-
+import { ThemeProvider } from '@react-navigation/native'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { DripsyProvider } from 'dripsy'
 import { ReactNode, useEffect } from 'react'
@@ -16,8 +21,8 @@ export default function AppProvider({
 }) {
   const colorMode = useColorScheme()
   const themeSelector = colorMode === 'dark' ? theme : themeLight
-  // const navigationThemeSelector =
-  //   colorMode === 'dark' ? navigationThemeDark : navigationThemeLight
+  const navigationThemeSelector =
+    colorMode === 'dark' ? navigationThemeDark : navigationThemeLight
 
   const queryClient = new QueryClient()
 
@@ -28,13 +33,15 @@ export default function AppProvider({
 
   return (
     <DripsyProvider theme={themeSelector}>
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <BottomSheetModalProvider>
-          <QueryClientProvider client={queryClient}>
-            {children}
-          </QueryClientProvider>
-        </BottomSheetModalProvider>
-      </GestureHandlerRootView>
+      <ThemeProvider value={navigationThemeSelector}>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <BottomSheetModalProvider>
+            <QueryClientProvider client={queryClient}>
+              {children}
+            </QueryClientProvider>
+          </BottomSheetModalProvider>
+        </GestureHandlerRootView>
+      </ThemeProvider>
     </DripsyProvider>
   )
 }

@@ -1,7 +1,5 @@
 import useBookOperations from '@/helpers/useBookOperations'
-import { searchBooks } from '@/services/books'
-import { isBookInDb } from '@/services/database'
-import { BookData } from '@/types/books'
+import { getBooks, isBookInDb } from '@/services/database'
 import { FlashList } from '@shopify/flash-list'
 import { useQuery } from '@tanstack/react-query'
 import { Text, View } from 'dripsy'
@@ -16,11 +14,12 @@ export default function BookSearch() {
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ['books', searchQuery],
-    queryFn: () => searchBooks(searchQuery),
+    queryFn: () => getBooks(),
     enabled: searchQuery.length > 0,
   })
 
-  const BookItem = ({ item }: { item: BookData }) => {
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  const BookItem = ({ item }: { item: any }) => {
     const [isAdded, setIsAdded] = useState<boolean>(false)
 
     useEffect(() => {
@@ -67,9 +66,9 @@ export default function BookSearch() {
         <FlashList
           data={data || []}
           renderItem={({ item }) =>
-            isLoading ? <CardLoader /> : <BookItem item={item as BookData} />
+            isLoading ? <CardLoader /> : <BookItem item={item} />
           }
-          keyExtractor={(item) => (item as BookData).id}
+          keyExtractor={(item) => item.id}
           estimatedItemSize={200}
         />
       )}
