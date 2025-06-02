@@ -5,23 +5,41 @@ import { useDatabase } from '@nozbe/watermelondb/hooks'
 import { FlashList } from '@shopify/flash-list'
 import { SafeAreaView } from 'dripsy'
 import { AnimatePresence, MotiView } from 'moti'
-import { createRef, useEffect, useState } from 'react'
+import { createRef, useCallback, useEffect, useState } from 'react'
 import { LayoutAnimation } from 'react-native'
-import { from, switchMap } from 'rxjs'
+import { Observable, switchMap } from 'rxjs'
 import BookCard from '../components/BookCard'
 import CommonHeader from '../components/CommonHeader'
 import useRemoveBook from '../helpers/useRemoveBook'
 
+type BookWithAuthors = {
+  id: string
+  title: string
+  authors: string[]
+  cover: string
+  pageCount: number
+  description: string
+}
+
 export default function SavedBooksScreen() {
   const database = useDatabase()
-  const [books, setBooks] = useState<any>([]) // fix type
+  const [books, setBooks] = useState<BookWithAuthors[]>([])
   const { removeBook } = useRemoveBook()
-  const list = createRef<FlashList<Book>>()
+  const list = createRef<FlashList<BookWithAuthors>>()
 
-  function getBooksObservable() {
+  const getBooksObservable = useCallback(() => {
     const bookCollection = database.collections.get<Book>('books')
-    return from(bookCollection.query().observe())
-  }
+    const observable = bookCollection.query().observe()
+    return new Observable<Book[]>((subscriber) => {
+      const subscription = observable.subscribe({
+        next: (books) => subscriber.next(books),
+        error: (err) => subscriber.error(err),
+        complete: () => subscriber.complete(),
+      })
+      return () => subscription.unsubscribe()
+    })
+  }, [database])
+
   function handleRemoveBook(bookId: string) {
     setTimeout(() => {
       removeBook(bookId)
@@ -33,7 +51,7 @@ export default function SavedBooksScreen() {
   useEffect(() => {
     const subscription = getBooksObservable()
       .pipe(
-        switchMap((books) =>
+        switchMap((books: Book[]) =>
           Promise.all(
             books.map(async (book) => {
               const authorsQuery = database.collections
@@ -61,9 +79,9 @@ export default function SavedBooksScreen() {
       })
 
     return () => subscription.unsubscribe()
-  }, [])
+  }, [getBooksObservable, database])
 
-  const renderItem = ({ item }: { item: Book }) => {
+  const renderItem = ({ item }: { item: BookWithAuthors }) => {
     const title = item.title
     const authors = item.authors
     const img = item.cover

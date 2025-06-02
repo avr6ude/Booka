@@ -4,12 +4,13 @@ import useRemoveBook from '@/helpers/useRemoveBook'
 import { BookData } from '@/types/books'
 import { useDatabase } from '@nozbe/watermelondb/hooks'
 import { FlashList } from '@shopify/flash-list'
-import { TextInput, View, useSx } from 'dripsy'
+import { Text, TextInput, View, useSx } from 'dripsy'
 import { useEffect, useState } from 'react'
 import useAddBook from '../helpers/useAddBook'
 import BookCard from './BookCard'
 import Button from './Button'
 import CardLoader from './CardLoader'
+
 export default function BookSearch() {
   const sx = useSx()
 
@@ -44,7 +45,7 @@ export default function BookSearch() {
   const [query, setQuery] = useState<string>('')
   const { data, isError, isLoading, refetch } = useBookSearch(query)
 
-  const handleSearch = async () => {
+  const handleSearch = () => {
     if (query.length > 0) {
       refetch()
     }
@@ -69,7 +70,7 @@ export default function BookSearch() {
   }
   const BookItem = ({ item }: { item: BookData }) => {
     const database = useDatabase()
-    const [isAdded, setAdded] = useState<any>(false)
+    const [isAdded, setAdded] = useState<unknown>(false)
 
     useEffect(() => {
       const id = [item.id]
@@ -81,7 +82,7 @@ export default function BookSearch() {
       })
 
       return () => subscription.unsubscribe()
-    }, [item])
+    }, [item, database])
 
     const handleAddBook = async () => {
       if (isAdded) {
@@ -93,11 +94,11 @@ export default function BookSearch() {
       }
     }
 
-    const title = item.title
-    const authors = item.authors
+    const title = 'test'
+    const authors = ['1,2,3']
     const img = item.cover
-    const pages = item.pages
-    const description = item.description
+    const pages = 100
+    const description = 'item.description'
 
     return (
       <BookCard
@@ -113,16 +114,20 @@ export default function BookSearch() {
   }
 
   return (
-    <View style={{ height: '100%', flex: 1 }}>
+    <View style={{ height: '100%', flex: 1, alignItems: 'center' }}>
       <SearchBar />
-      <FlashList
-        data={data}
-        renderItem={({ item }) =>
-          isLoading ? <CardLoader /> : <BookItem item={item} />
-        }
-        keyExtractor={(item) => item.id}
-        estimatedItemSize={200}
-      />
+      {isError ? (
+        <Text>Something went wrong. Please, try again later.</Text>
+      ) : (
+        <FlashList
+          data={data}
+          renderItem={({ item }) =>
+            isLoading ? <CardLoader /> : <BookItem item={item} />
+          }
+          keyExtractor={(item) => item.id}
+          estimatedItemSize={200}
+        />
+      )}
     </View>
   )
 }

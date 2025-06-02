@@ -1,5 +1,6 @@
 import { Ionicons } from '@expo/vector-icons'
 import { Text, useDripsyTheme, useSx } from 'dripsy'
+import { ComponentProps } from 'react'
 import AnimatedPressable from './AnimatedPressable'
 
 interface ButtonProps {
@@ -9,7 +10,7 @@ interface ButtonProps {
   onPress: () => void
   color?: string
   round?: boolean
-  iconName?: React.ComponentProps<typeof Ionicons>['name']
+  iconName?: ComponentProps<typeof Ionicons>['name']
   iconColor?: string
   iconSize?: number
   type?: buttonType | string
@@ -18,11 +19,6 @@ interface ButtonProps {
 enum buttonType {
   primary = 'primary',
   secondary = 'secondary',
-}
-enum buttonSize {
-  small = 'small',
-  medium = 'medium',
-  large = 'large',
 }
 
 export default function Button({
