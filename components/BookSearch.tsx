@@ -58,12 +58,20 @@ export default function BookSearch() {
   }
 
   return (
-    <View style={{ height: '100%', flex: 1, alignItems: 'center' }}>
+    <View
+      style={{
+        height: '100%',
+        flex: 1,
+        width: '100%',
+      }}
+    >
       <SearchBar onSearch={setSearchQuery} />
       {isError ? (
-        <Text>Something went wrong. Please, try again later.</Text>
+        <Text sx={{ textAlign: 'center' }}>
+          Something went wrong. Please, try again later.
+        </Text>
       ) : !data ? (
-        <Text>No books found</Text>
+        <Text sx={{ textAlign: 'center' }}>No books found</Text>
       ) : (
         <FlashList
           data={data || []}

@@ -1,7 +1,7 @@
 import { db } from '@/db'
 import { type NewAuthor, type NewBook, authors, books } from '@/db/schema'
 import { BookData } from '@/types/books'
-import { eq, like } from 'drizzle-orm'
+import { eq, like, or } from 'drizzle-orm'
 
 export const initDatabase = async () => {
   // Drizzle will automatically create tables based on the schema
@@ -81,7 +81,9 @@ export const getBooks = async (
     })
     .from(books)
     .leftJoin(authors, eq(books.id, authors.bookId))
-    .where(like(books.title, `%${query}%`))
+    .where(
+      or(like(books.title, `%${query}%`), like(authors.name, `%${query}%`))
+    )
 
   const booksMap = new Map<string, BookWithAuthors>()
 

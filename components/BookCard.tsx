@@ -41,10 +41,13 @@ export default function BookCard({
   const sx = useSx()
 
   const container = sx({
+    display: 'flex',
     paddingHorizontal: 10,
     flexDirection: 'row',
     marginBottom: 10,
     justifyContent: 'space-between',
+    width: '100%',
+    alignItems: 'center',
   })
 
   const contentStyles = sx({
