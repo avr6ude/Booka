@@ -32,25 +32,11 @@
     "plugins": [
       "expo-router",
       "expo-build-properties",
-      ["@morrowdigital/watermelondb-expo-plugin"],
       [
         "expo-build-properties",
         {
           "android": {
-            "kotlinVersion": "1.6.10",
-            "packagingOptions": {
-              "pickFirst": ["**/libc++_shared.so"]
-            }
-          },
-          "ios": {
-            "extraPods": [
-              {
-                "name": "simdjson",
-                "configurations": ["Debug", "Release"],
-                "path": "../node_modules/@nozbe/simdjson",
-                "modular_headers": true
-              }
-            ]
+            "kotlinVersion": "1.6.10"
           }
         }
       ]

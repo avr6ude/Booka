@@ -12,11 +12,11 @@
     "paths": {
       "@/*": ["./*"]
     },
-    "target": "ESNext",
-    "module": "ESNext",
+    "target": "esnext",
+    "module": "NodeNext",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "moduleResolution": "bundler",
+    "moduleResolution": "NodeNext",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,

@@ -6,7 +6,7 @@ import FontAwesome from '@expo/vector-icons/FontAwesome'
 import { useFonts } from 'expo-font'
 import { Tabs } from 'expo-router'
 import * as SplashScreen from 'expo-splash-screen'
-import { useEffect } from 'react'
+import { ComponentProps, useEffect } from 'react'
 export { ErrorBoundary } from 'expo-router'
 
 export const unstable_settings = {
@@ -38,7 +38,7 @@ export default function RootLayout() {
   return <RootLayoutNav />
 }
 function TabBarIcon(props: {
-  name: React.ComponentProps<typeof AntDesign>['name']
+  name: ComponentProps<typeof AntDesign>['name']
   color: string
 }) {
   return <AntDesign size={28} style={{ marginBottom: -3 }} {...props} />

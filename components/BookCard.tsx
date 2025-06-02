@@ -7,7 +7,7 @@ import {
   BottomSheetView,
 } from '@gorhom/bottom-sheet'
 import { Text, View, useSx } from 'dripsy'
-import { useCallback, useMemo, useRef } from 'react'
+import { ComponentProps, useCallback, useMemo, useRef } from 'react'
 import Animated from 'react-native-reanimated'
 import truncateEnd from '../helpers/truncateEnd'
 import AnimatedPressable from './AnimatedPressable'
@@ -24,7 +24,7 @@ export interface BookProps {
   pageCount: number
   onPress?: () => void
   buttonTitle?: string
-  buttonIcon?: React.ComponentProps<typeof Ionicons>['name']
+  buttonIcon?: ComponentProps<typeof Ionicons>['name']
   buttonOnPress?: () => void
 }
 
@@ -36,7 +36,7 @@ export default function BookCard({
   description,
   buttonTitle,
   buttonIcon,
-  buttonOnPress = () => {},
+  buttonOnPress,
 }: BookProps) {
   const sx = useSx()
 
@@ -138,7 +138,7 @@ export default function BookCard({
           type="secondary"
           round
           title={buttonTitle}
-          onPress={buttonOnPress}
+          onPress={() => buttonOnPress?.()}
           iconName={buttonIcon}
         />
       </View>

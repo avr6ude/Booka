@@ -6,6 +6,7 @@ module.exports = function (api) {
       ['@babel/plugin-proposal-decorators', { legacy: true }],
       ['@babel/plugin-proposal-class-properties', { loose: true }],
       ['@babel/plugin-transform-runtime', { helpers: true, regenerator: true }],
+      ['babel-plugin-inline-import', { extensions: ['.sql'] }],
       'react-native-reanimated/plugin',
     ],
   }

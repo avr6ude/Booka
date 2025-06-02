@@ -1,23 +1,17 @@
-import { Database, Q } from '@nozbe/watermelondb'
+import { isBookInDb as checkBookInDb } from '@/services/database'
 import { Observable } from 'rxjs'
 
-export const isBookInDbObservable = (database: Database, data: any) => {
-  return new Observable((subscriber) => {
+export const isBookInDbObservable = (data: string[]) => {
+  return new Observable<boolean>((subscriber) => {
     const checkBook = async () => {
       for (const bookId of data) {
-        const books = await database.collections
-          .get('books')
-          .query(Q.where('id', bookId))
-          .fetch()
-
-        if (books.length > 0) {
+        const exists = await checkBookInDb(bookId)
+        if (exists) {
           subscriber.next(true)
           subscriber.complete()
-
           return
         }
       }
-
       subscriber.next(false)
       subscriber.complete()
     }
